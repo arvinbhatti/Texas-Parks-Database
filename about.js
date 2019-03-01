@@ -4,11 +4,23 @@ member = function(userName) {
 	this.imgUrl = "placeholder";
 	this.bio = "placeholder";
 	this.commits = 0;
+	this.issues = 0;
 
-	this.inc = function() {
+	this.inc_com = function() {
 		this.commits++;
 	}
+	this.inc_iss = function() {
+		this.issues++;
+	}
 }
+
+var simon_n = "Simon Kliewer";
+var amber_n = "Amber Klepser";
+var arvin_n = "Arvin Bhatti";
+var yash_n = "Yash Bora";
+var jason_n = "Jason Stephen";
+var mahmood_n = "Mahmood Alam";
+var wyatt_n = "Wyatt Daumas";
 
 var simon = new member("simonkliewer");
 var amber = new member("amberklepser");
@@ -59,16 +71,64 @@ function getUserInfo(userName, callback) {
 	xmlhttp.send();
 }
 
+function getIssues() {
+	var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                        var data = (JSON.parse(xmlhttp.responseText));
+                        for(var i = 0; i < data.length; i++) {
+				console.log(data[i]);
+                                var userData = data[i].user;
+                                if (userData != null) {
+                                        if(userData.login != null) {
+                                                team.getMember(userData.login).inc_iss();
+                                        }
+                                }
+                        }
+                }
+        };
+        xmlhttp.open("GET", "https://api.github.com/repos/simonkliewer/ee461l_coral/issues");
+        xmlhttp.send();
+}
+
 function getCommits() {
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			var data = (JSON.parse(xmlhttp.responseText));
 			for(var i = 0; i < data.length; i++) {
-				var userData = data[i].author;
-				if (userData != null) {
-					if(userData.login != null) {
-						team.getMember(userData.login).inc();
+
+				var author = null;
+				if(data[i].author != null)
+					author = data[i].author.login;
+				var committer = null;
+					if (data[i].committer != null)
+						committer = data[i].committer.login;
+				var commit_author = data[i].commit.author.name;
+
+				console.log(author);
+				console.log(committer);
+				console.log(commit_author);
+
+				if (author == null || committer == null) {
+					if (commit_author == yash_n)
+						team.getMember("ybora").inc_com();
+					if (commit_author == jason_n)
+						team.getMember("jasonstephen15").inc_com();
+					if(commit_author == simon_n)
+						team.getMember("simonkliewer").inc_com();
+					if(commit_author == amber_n)
+						team.getMember("amberklepser").inc_com();
+					if(commit_author == arvin_n)
+						team.getMember("arvinbhatti").inc_com();
+					if(commit_author == mahmood_n)
+						team.getMember("mahmood-alam").inc_com();
+					if(commit_author == wyatt_n)
+						team.getMember("Wyatt72").inc_com();
+				}
+				if (author != null) {
+					if(author != null) {
+						team.getMember(author).inc_com();
 					}
 				}
 			}
@@ -76,6 +136,24 @@ function getCommits() {
 	};
 	xmlhttp.open("GET", "https://api.github.com/repos/simonkliewer/ee461l_coral/commits");
 	xmlhttp.send();
+}
+
+function commitsTotal() {
+	var num = 0;
+	for(var i = 0; i < 7; i++) {
+		var memCommits = team.list[i].commits;
+		num += memCommits;
+	}
+	return num;
+}
+
+function issuesTotal() {
+	var num = 0;
+	for(var i = 0; i < 7; i++) {
+		var memIss = team.list[i].issues;
+		num += memIss;
+	}
+	return num;
 }
 
 /*
@@ -93,6 +171,7 @@ function getIssues(user) {
 */
 // populate number of commits for each team member getCommits();
 getCommits();
+getIssues();
 
 // populate rest of team info
 for(var i = 0; i < 7; i++) {
@@ -109,6 +188,7 @@ async function demo() {
 	await sleep(1000);
 	console.log('Two seconds later');
 	
+	/*
 	for (var i = 0; i < 7; i++) {
 		console.log(team.list[i].name);
 		console.log(team.list[i].userName);
@@ -116,6 +196,7 @@ async function demo() {
 		console.log(team.list[i].bio);
 		console.log(team.list[i].commits);
 	}
+	*/
    			
 
 ////////////////////////////////// SET DOCUMENT ELEMENTS HERE ///////////////////////////////////////////////
@@ -144,30 +225,40 @@ async function demo() {
 	document.getElementById("simon_img").src = team.getMember("simonkliewer").imgUrl;
 	document.getElementById("simon_name").innerHTML = team.getMember("simonkliewer").name;
 	document.getElementById("simon_commits").innerHTML += " " + team.getMember("simonkliewer").commits;
+	document.getElementById("simon_issues").innerHTML += " " + team.getMember("simonkliewer").issues;
 
 	document.getElementById("amber_img").src = team.getMember("amberklepser").imgUrl;
 	document.getElementById("amber_name").innerHTML = team.getMember("amberklepser").name;
 	document.getElementById("amber_commits").innerHTML += " " + team.getMember("amberklepser").commits;
+	document.getElementById("amber_issues").innerHTML += " " + team.getMember("amberklepser").issues;
 
 	document.getElementById("arvin_img").src = team.getMember("arvinbhatti").imgUrl;
 	document.getElementById("arvin_name").innerHTML = team.getMember("arvinbhatti").name;
 	document.getElementById("arvin_commits").innerHTML += " " + team.getMember("arvinbhatti").commits;
+	document.getElementById("arvin_issues").innerHTML += " " + team.getMember("arvinbhatti").issues;
 
 	document.getElementById("yash_img").src = team.getMember("ybora").imgUrl;
 	document.getElementById("yash_name").innerHTML = team.getMember("ybora").name;
 	document.getElementById("yash_commits").innerHTML += " " + team.getMember("ybora").commits;
+	document.getElementById("yash_issues").innerHTML += " " + team.getMember("ybora").issues;
 
 	document.getElementById("jason_img").src = team.getMember("jasonstephen15").imgUrl;
 	document.getElementById("jason_name").innerHTML = team.getMember("jasonstephen15").name;
 	document.getElementById("jason_commits").innerHTML += " " + team.getMember("jasonstephen15").commits;
+	document.getElementById("jason_issues").innerHTML += " " + team.getMember("jasonstephen15").issues;
 
 	document.getElementById("mahmood_img").src = team.getMember("mahmood-alam").imgUrl;
 	document.getElementById("mahmood_name").innerHTML = team.getMember("mahmood-alam").name;
 	document.getElementById("mahmood_commits").innerHTML += " " + team.getMember("mahmood-alam").commits;
+	document.getElementById("mahmood_issues").innerHTML += " " + team.getMember("mahmood-alam").issues;
 
 	document.getElementById("wyatt_img").src = team.getMember("Wyatt72").imgUrl;
 	document.getElementById("wyatt_name").innerHTML = team.getMember("Wyatt72").name;
 	document.getElementById("wyatt_commits").innerHTML += " " + team.getMember("Wyatt72").commits;
+	document.getElementById("wyatt_issues").innerHTML += " " + team.getMember("Wyatt72").issues;
+
+	document.getElementById("tot_commits").innerHTML = " " + commitsTotal();
+	document.getElementById("tot_issues").innerHTML = " " + issuesTotal();
 			
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
