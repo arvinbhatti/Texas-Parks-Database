@@ -77,7 +77,7 @@ function getIssues() {
                 if (this.readyState == 4 && this.status == 200) {
                         var data = (JSON.parse(xmlhttp.responseText));
                         for(var i = 0; i < data.length; i++) {
-				console.log(data[i]);
+				//console.log(data[i]);
                                 var userData = data[i].user;
                                 if (userData != null) {
                                         if(userData.login != null) {
@@ -106,9 +106,9 @@ function getCommits() {
 						committer = data[i].committer.login;
 				var commit_author = data[i].commit.author.name;
 
-				console.log(author);
-				console.log(committer);
-				console.log(commit_author);
+				//console.log(author);
+				//console.log(committer);
+				//console.log(commit_author);
 
 				if (author == null || committer == null) {
 					if (commit_author == yash_n)
@@ -178,16 +178,18 @@ for(var i = 0; i < 7; i++) {
 	getUserInfo(team.list[i], handler);
 }
 
-// wait for request to complete
+/*
 function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
+*/
 
-async function demo() {
-	console.log('Taking a break...');
-	await sleep(1000);
-	console.log('Two seconds later');
-	
+function update(ms) {
+	var start = new Date().getTime();
+   	var end = start;
+   	while(end < start + ms) {
+     		end = new Date().getTime();
+	}	
 	/*
 	for (var i = 0; i < 7; i++) {
 		console.log(team.list[i].name);
@@ -221,47 +223,61 @@ async function demo() {
 	*/	
 
 	// v v v your code here v v v	
-	
+	console.log("setting simon");
+	console.log(team.getMember("simonkliewer"));
 	document.getElementById("simon_img").src = team.getMember("simonkliewer").imgUrl;
 	document.getElementById("simon_name").innerHTML = team.getMember("simonkliewer").name;
 	document.getElementById("simon_commits").innerHTML += " " + team.getMember("simonkliewer").commits;
 	document.getElementById("simon_issues").innerHTML += " " + team.getMember("simonkliewer").issues;
 
+	console.log("setting amber");
+	console.log(team.getMember("amberklepser"));
 	document.getElementById("amber_img").src = team.getMember("amberklepser").imgUrl;
 	document.getElementById("amber_name").innerHTML = team.getMember("amberklepser").name;
 	document.getElementById("amber_commits").innerHTML += " " + team.getMember("amberklepser").commits;
 	document.getElementById("amber_issues").innerHTML += " " + team.getMember("amberklepser").issues;
 
+	console.log("setting arvin");
+	console.log(team.getMember("arvinbhatti"));
 	document.getElementById("arvin_img").src = team.getMember("arvinbhatti").imgUrl;
 	document.getElementById("arvin_name").innerHTML = team.getMember("arvinbhatti").name;
 	document.getElementById("arvin_commits").innerHTML += " " + team.getMember("arvinbhatti").commits;
 	document.getElementById("arvin_issues").innerHTML += " " + team.getMember("arvinbhatti").issues;
 
+	console.log("setting yash");
+	console.log(team.getMember("ybora"));
 	document.getElementById("yash_img").src = team.getMember("ybora").imgUrl;
 	document.getElementById("yash_name").innerHTML = team.getMember("ybora").name;
 	document.getElementById("yash_commits").innerHTML += " " + team.getMember("ybora").commits;
 	document.getElementById("yash_issues").innerHTML += " " + team.getMember("ybora").issues;
 
+	console.log("setting jason");
+	console.log(team.getMember("jasonstephen15"));
 	document.getElementById("jason_img").src = team.getMember("jasonstephen15").imgUrl;
 	document.getElementById("jason_name").innerHTML = team.getMember("jasonstephen15").name;
 	document.getElementById("jason_commits").innerHTML += " " + team.getMember("jasonstephen15").commits;
 	document.getElementById("jason_issues").innerHTML += " " + team.getMember("jasonstephen15").issues;
 
+	console.log("setting mahmood");
+	console.log(team.getMember("mahmood-alam"));
 	document.getElementById("mahmood_img").src = team.getMember("mahmood-alam").imgUrl;
 	document.getElementById("mahmood_name").innerHTML = team.getMember("mahmood-alam").name;
 	document.getElementById("mahmood_commits").innerHTML += " " + team.getMember("mahmood-alam").commits;
 	document.getElementById("mahmood_issues").innerHTML += " " + team.getMember("mahmood-alam").issues;
 
+	console.log("setting wyatt");
+	console.log(team.getMember("Wyatt72"));
 	document.getElementById("wyatt_img").src = team.getMember("Wyatt72").imgUrl;
 	document.getElementById("wyatt_name").innerHTML = team.getMember("Wyatt72").name;
 	document.getElementById("wyatt_commits").innerHTML += " " + team.getMember("Wyatt72").commits;
 	document.getElementById("wyatt_issues").innerHTML += " " + team.getMember("Wyatt72").issues;
 
+	console.log("calculating totals");
 	document.getElementById("tot_commits").innerHTML = " " + commitsTotal();
 	document.getElementById("tot_issues").innerHTML = " " + issuesTotal();
 			
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 			
-demo();	
+update(5000);	
 
