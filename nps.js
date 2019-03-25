@@ -1,12 +1,18 @@
 function myFunction() {
 
 ///////////////// ZIP to Lat/Long API Request /////////////////
-	var zipKey = "YuS1Bcwah4KsW0UZaT0faCEbZ1oXoPT09I1diZcH2P6lE8aRukvibq0rNXUscauA/";
+	var zipKey = "c5qxOg7E7XHGPypOWqWliSM64AHEt3FKkZbsZplNyDkYth7ZwHDZxDlfKw7NRYgs/";
 	var zipEndpoint = "https://www.zipcodeapi.com/rest/";
 	var zipType = "json";
 	var zipUnits = "degrees";
 	var zipLat;
 	var zipLong;
+
+
+
+//list all the parks
+var park = "";
+var limit = "10"; 
 
 	//gets zipcode text
 	var zipcode = document.getElementById("zipInput").value;
@@ -16,15 +22,24 @@ function myFunction() {
 	// Open a new connection, using the GET request on the URL endpoint
 	zipRequest.open('GET', zipUrl, true)
 	zipRequest.onload = function () {
+
     // Begin accessing JSON data here
-		var data = JSON.parse(this.response)
+		var json = JSON.parse(this.response)
 		//console.log(data);
-		zipLat = data.lat;
-		zipLong = data.lng;
+		zipLat = json.lat;
+		zipLong = json.lng;
 		parkReq(zipLat, zipLong);
+
+
 	}
+
 	// Send request
 	zipRequest.send();
+
+
+
+
+
 }
 
 ////////////////////// Parks API Request //////////////////////
@@ -41,12 +56,13 @@ var fullUrl = endpoint + park + "&limit=" + limit + "&api_key=" + apiKey;
 //console.log(fullUrl);
 
 var parkDict = [];
-function Park(parkCode, name, lat, long) {
+function Park(parkCode, name, lat, long, address) {
 	this.parkCode = parkCode;
 	this.name = name;
 	this.lat = lat;
 	this.long = long;
 	this.dist = dist(lat, long, zipLat, zipLong);
+	this.address = address;
 }
 
 // Create a request variable and assign a new XMLHttpRequest object to it.
@@ -59,6 +75,35 @@ request.onload = function () {
   var data = json["data"];
   //console.log(data);
    
+  var firstObject = data[0]
+  var secObject = data[1]
+  var thirObject = data[2]
+
+
+  console.log(document.getElementById("p1n").rows[0].cells[1]);
+  console.log(document.getElementById("p1n").rows[0].cells[2]);
+  console.log(document.getElementById("p1n").rows[0].cells[3]);
+  console.log(document.getElementById("p1n").rows[0].cells[4]);
+
+  console.log(document.getElementById("p1n").rows[1].cells[1]);
+  console.log(document.getElementById("p1n").rows[1].cells[2]);
+  console.log(document.getElementById("p1n").rows[1].cells[3]);
+  console.log(document.getElementById("p1n").rows[1].cells[4]);
+
+  console.log(document.getElementById("p1n").rows[3].cells[1]);
+  console.log(document.getElementById("p1n").rows[3].cells[2]);
+  console.log(document.getElementById("p1n").rows[3].cells[3]);
+  console.log(document.getElementById("p1n").rows[3].cells[4]);
+
+    document.getElementById("p1n").rows[3].cells[1].innerHTML = firstObject.name;
+	document.getElementById("p1n").rows[4].cells[1].innerHTML = secObject.name;
+	document.getElementById("p1n").rows[5].cells[1].innerHTML = thirObject.name;
+  
+  console.log(firstObject.name)
+
+
+
+
   // store parks info
   for (var i = 0; i < data.length; i++) {
   	var park = data[i];
@@ -69,7 +114,8 @@ request.onload = function () {
   		var long = temp[1].split(":")[1];
   		//console.log(lat);
   		//console.log(long);
-  		parkObj = new Park(park.parkCode, park.fullName, lat, long);
+  		var address = park.addresses[0].line1 + park.addresses[0].line2 + park.addresses[0].line3 + park.addresses[0].city + park.addresses[0].stateCode + park.addresses[0].postalCode;
+  		parkObj = new Park(park.parkCode, park.fullName, lat, long, address);
   		//console.log(parkObj);
   		parkDict.push(parkObj);
   	}
