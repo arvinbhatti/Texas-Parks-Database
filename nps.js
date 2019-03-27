@@ -1,7 +1,7 @@
 function myFunction() {
 
 ///////////////// ZIP to Lat/Long API Request /////////////////
-	var zipKey = "YuS1Bcwah4KsW0UZaT0faCEbZ1oXoPT09I1diZcH2P6lE8aRukvibq0rNXUscauA/";
+	var zipKey = "c5qxOg7E7XHGPypOWqWliSM64AHEt3FKkZbsZplNyDkYth7ZwHDZxDlfKw7NRYgs/";
 	var zipEndpoint = "https://www.zipcodeapi.com/rest/";
 	var zipType = "json";
 	var zipUnits = "degrees";
@@ -10,6 +10,9 @@ function myFunction() {
 
 	//gets zipcode text
 	var zipcode = document.getElementById("zipInput").value;
+	// set enter event listener
+	enterEvent(document.getElementById("zipInput"));
+
 	//console.log("zip code: " + zipcode);
 	zipUrl = zipEndpoint + zipKey + "info." + zipType + "/" + zipcode + "/" + zipUnits;
 	var zipRequest = new XMLHttpRequest()
@@ -127,4 +130,14 @@ function dist(lat1, lon1, lat2, lon2) {
 // Converts numeric degrees to radians
 function toRad(value) {
         return value * Math.PI / 180;
+}
+
+function enterEvent(element){
+	input.addEventListener("keyup", function(event) {
+		// Number 13 is the "Enter" key on the keyboard
+		if (event.keyCode === 13) {
+		    // Trigger the button element with a click
+		    document.getElementById("myBtn").click();
+		}
+	});
 }

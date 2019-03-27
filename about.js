@@ -37,7 +37,7 @@ class memberList {
 	}
 
 	getMember(userName) {
-		for (var i = 0; i < this.len; i++) {
+		 (var i = 0; i < this.len; i++) {
 			if(this.list[i].userName == userName)
 				return this.list[i];
 		}
@@ -48,7 +48,7 @@ var team = new memberList();
 
 function handler(data, user) {
 	
-	if(data.name != null)
+if(data.name != null)
 	user.name = data.name;
 if(data.avatar_url != null)
 	user.imgUrl = data.avatar_url;
