@@ -3,7 +3,10 @@
 <head>
   <title></title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons-wind.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.css">
 </head>
 <body>
   <nav class="navbar navbar-light bg-light static-top">
@@ -83,13 +86,85 @@
   </div>
 
   <div class="row" id="row4">
-    <div class="col">
+    <div class="col map">
       <h3 class="my-3">Map</h3>
-      <img class="img-fluid" src="http://placehold.it/700x500" alt="">
+     <!-- <img class="img-fluid" src="http://placehold.it/700x500" alt=""> -->
+     <div id="map" style="height: 400px;">
+       <!--<script>
+        var map;
+        function initMap() {
+        var myLatLng = {lat: 30.2586, lng: -97.8242};
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 12,
+          center: myLatLng
+        });
+
+        var marker = new google.maps.Marker({
+          position: myLatLng,
+          map: map,
+          title: 'Hello World!'
+        });
+      }
+    </script> 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBN3LuWqqwjKGG_ofNtT181WQNMAVaJnVs&callback=initMap"
+    async defer></script> -->
+     </div>
+
     </div>
-    <div class="col">
+    <div class="col weather">
       <h3 class="my-3">Weather</h3>
-      <img class="img-fluid" src="http://placehold.it/700x500" alt="">
+     <!-- <img class="img-fluid" src="http://placehold.it/700x500" alt=""> -->
+      <div id="weatherWidget" style="height: 400px;">
+        <div class="row h-50 align-items-center  weather-first-row" >
+          <div class="col-sm-6" style="text-align: center;">
+            <h4 class="weather-data" id="weather-summary"></h4>
+            <h1 class="weather-data" id="weather-temperature"></h1>
+            <h3 class="weather-data" id="weather-location">Austin, TX</h3>
+          </div>
+          <div class="col-sm-6" style="text-align: center;">
+            <i class="wi" id="icon-desc"></i>
+            
+          </div>
+           
+        </div>
+        <div class="row h-25 weather-info-rows">
+          <div class="col-sm-6 weather-grid" style="border-right: 1px solid; border-bottom: 1px solid;">
+            <p style="text-align: right;">Precipitation Probability</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <i class="wi wi-raindrops weather-info-icons"></i>
+              <p id="preciProb"></p>
+            </div>
+            
+            
+          </div>
+          <div class="col-sm-6 weather-grid" style="border-left: 1px solid; border-bottom: 1px solid;">
+            <p style="text-align: right;">Humidity</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <i class="wi wi-humidity weather-info-icons"></i>
+              <p id="humidity"></p>
+            </div>
+          </div>
+           
+        </div>
+        <div class="row h-25 weather-info-rows" >
+          <div class="col-sm-6 weather-grid" style="border-top: 1px solid; border-right: 1px solid;">
+            <p style="text-align: right;">Wind Speed</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <i class="wi wi-strong-wind weather-info-icons"></i>
+              <p id="windSpeed"></p>
+            </div>
+          </div>
+          <div class="col-sm-6 weather-grid" style="border-left: 1px solid; border-top: 1px solid;">
+            <p style="text-align: right;">UV Index</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <i class="wi wi-day-sunny weather-info-icons"></i>
+              <p id="uvIndex"></p>
+            </div>
+          </div>
+           
+        </div>
+      </div>
     </div>
     
   </div>
@@ -135,5 +210,8 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+<script type="application/javascript" src="darkSkyWeather.js"></script>
+<script type="application/javascript" src="maps.js" defer></script> 
 </body>
 </html>
