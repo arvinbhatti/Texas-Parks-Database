@@ -10,6 +10,8 @@
 
   <title>Texas Parks Database</title>
 
+  <script>src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"</script>
+  <script>src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"</script>
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -24,6 +26,7 @@
 </head>
 
 <body>
+
 
 
 <nav class="navbar navbar-light bg-light static-top">
@@ -121,6 +124,15 @@
 
   <!-- List of Parks -->
 <table class="table">
+
+
+<p>What type of trip would you like to plan?</p>
+<div class="pagination">
+  <a href="#" class="active" >National Parks</a>
+  <a href="trails.html">Trails</a>
+  <a href="campsites.html">Campsites</a>
+</div>
+
   <thead class="thead-dark">
     <tr>
       <th scope="col">#</th>
@@ -131,98 +143,31 @@
   </thead>
   <tbody>
     <tr>
-      <tr>
       <th scope="row">1</th>
-      <td>Astor Place Greenbelt</td>
-      <td>1716 Astor Pl., Austin, Texas 78721</td>
-      <td>1.442</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Ortega School Park</td>
-      <td>5308 Chico St., Austin, Texas 78721</td>
-      <td>4.23</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Joslin Neighborhood Park</td>
-      <td>2106 Cimaron Trl., Austin, Texas 78745</td>
-      <td>5.89</td>
-    </tr>
-    <tr>
-      <th scope="row">4</th>
-      <td>Northern Walnut Creek Greenbelt </td>
-      <td>2611 Park Bend Rd., Austin, Texas 78758</td>
-      <td>387.41</td>
-    </tr>
-    <tr>
-      <th scope="row">5</th>
-      <td><a href="peasepark.html">Pease Park</a></td>
-      <td>1100 Kingsbury St, Austin, TX 78705</td>
-      <td>42</td>
-    </tr>
-    <tr>
-      <th scope="row">6</th>
-      <td><a href="BartonCreek.html">Barton Creek Wilderness Park</a></td>
-      <td>2631 S. Capitol of Texas Hwy., Austin, TX 78746</td>
-      <td>1106</td>
-    </tr>
-    <tr>
-      <th scope="row">7</th>
-      <td><a href="ChisosBasinCamp.html">Chisos Basin Campground</a></td>
-      <td>Big Bend National Park, TX 79834-0129</td>
-      <td>4.23</td>
-    </tr>
-    <tr>
-      <th scope="row">8</th>
-      <td><a href="EnchantedRock.html">Enchanted Rock Park</a></td>
-      <td>16710 Ranch Rd 965, Fredericksburg, TX 78624</td>
-      <td>1,643</td>
-    </tr>    
-    <tr>
-      <th scope="row">9</th>
-      <td><a href="BigBen.html">Big Bend National Park</a></td>
-      <td>Big Bend National Park, TX 79834-0129</td>
-      <td>801,163</td>
-    </tr>  
-    <tr>
-      <th scope="row">10</th>
-      <td><a href="GarnerSP.html">Garner State Park</a></td>
-      <td>234 RR 1050 Concan, TX 78838</td>
-      <td>1,410</td>
-    </tr>  
-    <tr>
-      <th scope="row">11</th>
-      <td><a href="GuadalupeMountainsPark.html">Guadalupe Mountains Park</a></td>
-      <td>400 Pine Canyon Salt Flat, TX 79847</td>
-      <td>86,367</td>
-    </tr>  
-    <tr>
-      <th scope="row">12</th>
       <td><a href="CottonWoodGroupCamp.html">Cotton Wood Group Camp</a></td>
       <td>Big Bend National Park, TX 79834-0129</td>
       <td>4.23</td>
     </tr>  
     <tr>
-      <th scope="row">13</th>
+      <th scope="row">2</th>
       <td><a href="PineCanyonTrail.html">Pine Canyon Trail</a></td>
       <td>Big Bend National Park, TX 79834-0129</td>
       <td>4.23</td>
     </tr>  
     <tr>
-      <th scope="row">14</th>
+      <th scope="row">3</th>
       <td><a href="ChisosBasinCamp.html">Chisos Basin Camp</a></td>
       <td>Big Bend National Park, TX 79834-0129</td>
       <td>4.23</td>
     </tr>  
     <tr>
-      <th scope="row">15</th>
+      <th scope="row">4</th>
       <td><a href="JuniperCanyonTrail.html">Juniper Canyon Trail</a></td>
       <td>Big Bend National Park, TX 79834-0129</td>
       <td>4.23</td>
     </tr> 
     <tr>
-      <th scope="row">16</th>
+      <th scope="row">5</th>
       <td><a href="RioGrandeVilliageCamp.html">Rio Grande Villiage</a></td>
       <td>Big Bend National Park, TX 79834-0129</td>
       <td>4.23</td>
