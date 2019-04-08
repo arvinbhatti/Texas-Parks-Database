@@ -16,8 +16,10 @@ var limit = "10";
 
 	//gets zipcode text
 	var zipcode = document.getElementById("zipInput").value;
+
+	console.log(zipcode);
 	// set enter event listener
-	enterEvent(document.getElementById("zipInput"));
+	//enterEvent(document.getElementById("zipInput"));
 
 	//console.log("zip code: " + zipcode);
 	zipUrl = zipEndpoint + zipKey + "info." + zipType + "/" + zipcode + "/" + zipUnits;
@@ -178,12 +180,12 @@ function toRad(value) {
         return value * Math.PI / 180;
 }
 
-function enterEvent(element){
-	input.addEventListener("keyup", function(event) {
-		// Number 13 is the "Enter" key on the keyboard
-		if (event.keyCode === 13) {
-		    // Trigger the button element with a click
-		    document.getElementById("myBtn").click();
-		}
-	});
-}
+// function enterEvent(element){
+// 	input.addEventListener("keyup", function(event) {
+// 		// Number 13 is the "Enter" key on the keyboard
+// 		if (event.keyCode === 13) {
+// 		    // Trigger the button element with a click
+// 		    document.getElementById("myBtn").click();
+// 		}
+// 	});
+// }

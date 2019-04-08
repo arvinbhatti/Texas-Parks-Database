@@ -1,9 +1,8 @@
 /*!
  * Start Bootstrap - Landing Page v5.0.3 (https://startbootstrap.com/template-overviews/landing-page)
  * Copyright 2013-2019 Start Bootstrap
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-landing-page/blob/master/LICENSE)
+ * Licensed under MIT (https://github.com/BlackrockDigital/package/blob/master/LICENSE)
  */
-
 
 body {
   font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -50,13 +49,6 @@ header.masthead h1 {
   header.masthead h1 {
     font-size: 3rem;
   }
-}
-
-
-
-
-.dropdown {
-    display:inline-block;
 }
 
 .showcase .showcase-text {
@@ -129,33 +121,7 @@ header.masthead h1 {
   opacity: 0.3;
 }
 
-.list-group{
-    max-height: 100px;
-    margin-bottom: 10px;
-    overflow:scroll;
-    -webkit-overflow-scrolling: touch;
-}
-
-
-
-
-.map-container{
-overflow:hidden;
-padding-bottom:56.25%;
-position:relative;
-height:0;
-}
-.map-container iframe{
-left:0;
-top:0;
-height:100%;
-width:100%;
-position:absolute;
-}
-
 footer.footer {
   padding-top: 4rem;
   padding-bottom: 4rem;
 }
-
-

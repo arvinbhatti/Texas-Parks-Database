@@ -11,7 +11,8 @@ MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
   var dbo = db.db("coral");
 
   dbo.collection("fuckthis").find({}, { projection: { _id: 0, name: 1, address: 1 } }).toArray(function(err, result) {
-    if (err) throw err;
+    if (err) 
+      throw err;
 
     var length = result.length;
 
@@ -23,6 +24,9 @@ MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
 
     	console.log(i);
     	console.log(result[i].name);
+
+
+      
     }
     
     
