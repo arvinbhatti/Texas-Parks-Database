@@ -1,7 +1,7 @@
 function myFunction() {
 
 ///////////////// ZIP to Lat/Long API Request /////////////////
-	var zipKey = "c5qxOg7E7XHGPypOWqWliSM64AHEt3FKkZbsZplNyDkYth7ZwHDZxDlfKw7NRYgs/";
+	var zipKey = "JHWh257zn0Wtx8WLoVFCSiTbMWqC6obFzDZDNL1s8A1ZYJjoFW6X9stQvXrEZQys/";
 	var zipEndpoint = "https://www.zipcodeapi.com/rest/";
 	var zipType = "json";
 	var zipUnits = "degrees";
@@ -56,7 +56,9 @@ var limit = "600";
 
  // complete the url
 var endpoint = "https://developer.nps.gov/api/v1/parks?parkCode=";
-var apiKey = "nL3ttK1D6ACPakfdXuHtFVwqZoUqBUNakkT4mqZ6";
+//var apiKey = "nL3ttK1D6ACPakfdXuHtFVwqZoUqBUNakkT4mqZ6";
+var apiKey = "YHWbuaOPiRFh3aG80BSRzcJkLDybMOzGA46AFNvM";
+
 var fullUrl = endpoint + park + "&limit=" + limit + "&api_key=" + apiKey;
 //console.log(fullUrl);
 
