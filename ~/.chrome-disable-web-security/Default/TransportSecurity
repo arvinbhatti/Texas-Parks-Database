@@ -12,10 +12,17 @@
       "sts_observed": 1553808471.15526
    },
    "5EdUoB7YUY9zZV+2DkgVXgho8WUvp+D+6KpeUOhNQIM=": {
+<<<<<<< Updated upstream
       "expiry": 1586294954.065839,
       "mode": "force-https",
       "sts_include_subdomains": false,
       "sts_observed": 1554758954.065842
+=======
+      "expiry": 1585518204.176039,
+      "mode": "force-https",
+      "sts_include_subdomains": false,
+      "sts_observed": 1553982204.176042
+>>>>>>> Stashed changes
    },
    "8/RrMmQlCD2Gsp14wUCE1P8r7B2C5+yE0+g79IPyRsc=": {
       "expiry": 1586292937.26066,

@@ -1,7 +1,7 @@
 function myFunction() {
 
 ///////////////// ZIP to Lat/Long API Request /////////////////
-	var zipKey = "JHWh257zn0Wtx8WLoVFCSiTbMWqC6obFzDZDNL1s8A1ZYJjoFW6X9stQvXrEZQys/";
+	var zipKey = "ABpM4s6cQLLOpsFi3Asjal2XSQG3oy7r9ak0eYS2fzEs7hfUJAB2Vit4Dtw4sKzo/";
 	var zipEndpoint = "https://www.zipcodeapi.com/rest/";
 	var zipType = "json";
 	var zipUnits = "degrees";
@@ -55,12 +55,13 @@ var park = "";
 var limit = "600"; 
 
  // complete the url
-var endpoint = "https://developer.nps.gov/api/v1/parks?parkCode=";
+ //"              https://developer.nps.gov/api/v1/parks?api_key=nL3ttK1D6ACPakfdXuHtFVwqZoUqBUNakkT4mqZ6 
+var endpoint = "https://developer.nps.gov/api/v1/parks?";
 //var apiKey = "nL3ttK1D6ACPakfdXuHtFVwqZoUqBUNakkT4mqZ6";
-var apiKey = "YHWbuaOPiRFh3aG80BSRzcJkLDybMOzGA46AFNvM";
+var apiKey = "nL3ttK1D6ACPakfdXuHtFVwqZoUqBUNakkT4mqZ6";
 
-var fullUrl = endpoint + park + "&limit=" + limit + "&api_key=" + apiKey;
-//console.log(fullUrl);
+var fullUrl = endpoint + "parkCode=&fields=addresses" + "&api_key=" + apiKey;
+console.log(fullUrl);
 
 var parkDict = [];
 function Park(parkCode, name, lat, long, address) {
@@ -80,33 +81,33 @@ request.onload = function () {
   // Begin accessing JSON data here
   var json = JSON.parse(this.response);
   var data = json["data"];
-  //console.log(data);
+  console.log(data);
    
   var firstObject = data[0]
   var secObject = data[1]
   var thirObject = data[2]
 
 
-  console.log(document.getElementById("p1n").rows[0].cells[1]);
-  console.log(document.getElementById("p1n").rows[0].cells[2]);
-  console.log(document.getElementById("p1n").rows[0].cells[3]);
-  console.log(document.getElementById("p1n").rows[0].cells[4]);
+ //  console.log(document.getElementById("p1n").rows[0].cells[1]);
+ //  console.log(document.getElementById("p1n").rows[0].cells[2]);
+ //  console.log(document.getElementById("p1n").rows[0].cells[3]);
+ //  console.log(document.getElementById("p1n").rows[0].cells[4]);
 
-  console.log(document.getElementById("p1n").rows[1].cells[1]);
-  console.log(document.getElementById("p1n").rows[1].cells[2]);
-  console.log(document.getElementById("p1n").rows[1].cells[3]);
-  console.log(document.getElementById("p1n").rows[1].cells[4]);
+ //  console.log(document.getElementById("p1n").rows[1].cells[1]);
+ //  console.log(document.getElementById("p1n").rows[1].cells[2]);
+ //  console.log(document.getElementById("p1n").rows[1].cells[3]);
+ //  console.log(document.getElementById("p1n").rows[1].cells[4]);
 
-  console.log(document.getElementById("p1n").rows[3].cells[1]);
-  console.log(document.getElementById("p1n").rows[3].cells[2]);
-  console.log(document.getElementById("p1n").rows[3].cells[3]);
-  console.log(document.getElementById("p1n").rows[3].cells[4]);
+ //  console.log(document.getElementById("p1n").rows[3].cells[1]);
+ //  console.log(document.getElementById("p1n").rows[3].cells[2]);
+ //  console.log(document.getElementById("p1n").rows[3].cells[3]);
+ //  console.log(document.getElementById("p1n").rows[3].cells[4]);
 
-    document.getElementById("p1n").rows[3].cells[1].innerHTML = firstObject.name;
-	document.getElementById("p1n").rows[4].cells[1].innerHTML = secObject.name;
-	document.getElementById("p1n").rows[5].cells[1].innerHTML = thirObject.name;
+ //    document.getElementById("p1n").rows[3].cells[1].innerHTML = firstObject.name;
+	// document.getElementById("p1n").rows[4].cells[1].innerHTML = secObject.name;
+	// document.getElementById("p1n").rows[5].cells[1].innerHTML = thirObject.name;
   
-  console.log(firstObject.name)
+ //  console.log(firstObject.name)
 
 
 
@@ -138,7 +139,7 @@ request.onload = function () {
 
 function getClosestParks(list) {
 	var ret = [];
-	for(var i = 0; i < 20; i++){
+	for(var i = 0; i < 5; i++){
 		var ind = getMin(list);
 		var park = list[ind];
 		ret.push(list.splice(ind, 1)[0]);

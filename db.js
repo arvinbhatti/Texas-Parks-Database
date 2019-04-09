@@ -2,8 +2,8 @@ var MongoClient = require('mongodb').MongoClient;
 var names;
 
 //var url = "mongodb://coral_username:coral_password@cluster0-4dk4s.mongodb.net/test";
-var url = "mongodb://localhost:27017/";
-const uri = "mongodb+srv://arvinvhatti@gmail.com:coral$123@cluster0-yvnv5.mongodb.net/test?retryWrites=true";
+// var url = "mongodb://localhost:27017/";
+const uri = "mongodb+srv://arvinbhatti@gmail.com:coral$123@cluster0-yvnv5.mongodb.net/test?retryWrites=true";
 
 MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
   if (err) throw err;
