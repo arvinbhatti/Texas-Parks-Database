@@ -1,3 +1,8 @@
+function mongo(){
+  console.log("db.js running");
+
+}
+
 var MongoClient = require('mongodb').MongoClient;
 var names;
 
@@ -8,30 +13,39 @@ const uri = "mongodb+srv://coral_username:coral_password@cluster0-yvnv5.mongodb.
 MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
   if (err) throw err;
 
-  var dbo = db.db("plswork");
+  var database = db.db("plswork");
 
-  dbo.collection("newParks").find({}, { projection: { _id: 0, name: 1, address: 1 } }).toArray(function(err, result) {
-    if (err) 
-      throw err;
 
-    console.log("Connected");
-    console.log(result);
-    /*
-    var length = result.length;
 
-    var i;
+  var collection = database.collection("newParks");
 
-    for(i=0; i<length; i++){
+  database.collection('newCampgrounds').find().toArray(function(err, docs) {
+      console.log(JSON.stringify(docs));
+  });
 
-    	//names result[i].name
 
-    	console.log(i);
-    	console.log(result[i].name);
+  // collection.find({}, { name: 1}).toArray(function(err, result) {
+  //   if (err) 
+  //     throw err;
+
+  //   console.log("Connected");
+  //   console.log(result);
+    
+  //   var length = result.length;
+
+  //   var i;
+
+  //   for(i=0; i<length; i++){
+
+  //   	//names result[i].name
+
+  //   	console.log(i);
+  //   	console.log(result[i].name);
 
 
       
-    }
-    */
+  //   }
+    
     
     
     db.close();
