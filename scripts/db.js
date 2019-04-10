@@ -1,10 +1,38 @@
-var MongoClient = require('mongodb').MongoClient;
+var express = require('express');
 
+var app = express();
+
+var MongoClient = require('mongodb').MongoClient;
 var names;
 
 //var url = "mongodb://coral_username:coral_password@cluster0-4dk4s.mongodb.net/test";
 // var url = "mongodb://localhost:27017/";
 const uri = "mongodb+srv://coral_username:coral_password@cluster0-yvnv5.mongodb.net/test?retryWrites=true";
+
+var str="";
+
+
+app.route('/Employeeid').get(function(req, res)
+
+    {
+        MongoClient.connect(uri, function(err, db) {
+
+            var database = db.db("coral");
+            var cursor = database.collection('newParks').find();
+            //noinspection JSDeprecatedSymbols
+            cursor.each(function(err, item) {
+
+                if (item != null) {
+                    str = str + "    Employee id  " + item.fullName + "</br>";
+                }
+            });
+            res.send(str);
+            db.close();
+        });
+    });
+
+  var server = app.listen(8080, function() {}); 
+
 
 MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
   if (err) throw err;
@@ -33,13 +61,14 @@ MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
 
       console.log(i);
       console.log(result[i].fullName);
+      console.log(result[i].url);
 
 
-      var table = document.getElementById('parkTable');
+      // var table = document.getElementById('parkTable');
 
-      var row = table.insertRow(0);
-      var cell1 = row.insertCell(0);
-      cell1.innerHTML = result[i].fullName;
+      // var row = table.insertRow(0);
+      // var cell1 = row.insertCell(0);
+      // cell1.innerHTML = result[i].fullName;
 
 
 
