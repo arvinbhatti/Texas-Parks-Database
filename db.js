@@ -34,6 +34,26 @@ app.route('/Employeeid').get(function(req, res)
         });
     });
 
+app.get('/test',(req,res)=>{
+    //res.sendFile(__dirname +"/views/test.html",);
+     MongoClient.connect(uri, function(err, db) {
+
+            var database = db.db("coral");
+            var cursor = database.collection('newParks').find();
+            //noinspection JSDeprecatedSymbols
+            cursor.each(function(err, item) {
+
+                if (item != null) {
+                    str = str + "    Employee id  " + item.fullName + "</br>";
+                }
+            });
+           // res.send(str);
+           res.json({test: "title", message: str});
+            db.close();
+        });
+   // res.json({test:"title",message:"root"});
+});
+
   var server = app.listen(8080, function() {}); 
 
 var path = require('path');
