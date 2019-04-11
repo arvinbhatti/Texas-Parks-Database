@@ -10,7 +10,7 @@ const uri = "mongodb+srv://coral_username:coral_password@cluster0-yvnv5.mongodb.
 var str="";
 
 
-app.route('/Employeeid').get(function(req, res)
+app.route('/json').get(function(req, res)
 
     {
         MongoClient.connect(uri, function(err, db) {
