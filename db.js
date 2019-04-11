@@ -1,16 +1,18 @@
-var MongoClient = require('mongodb').MongoClient;
+var express = require('express');
 
+var app = express();
+
+var MongoClient = require('mongodb').MongoClient;
 var names;
 
 //var url = "mongodb://coral_username:coral_password@cluster0-4dk4s.mongodb.net/test";
 // var url = "mongodb://localhost:27017/";
 const uri = "mongodb+srv://coral_username:coral_password@cluster0-yvnv5.mongodb.net/test?retryWrites=true";
 
-<<<<<<< HEAD
 var str="";
 
 
-app.route('/json').get(function(req, res)
+app.route('/Employeeid').get(function(req, res)
 
     {
         MongoClient.connect(uri, function(err, db) {
@@ -42,22 +44,6 @@ app.use(express.static(path.join(__dirname, 'public')));
                 res.sendFile(__dirname + '/index.html');
             });
 
-
-  var path = require('path');
-
-let reqPath = path.join(__dirname, '../../../');
-
-
-
-app.use(express.static(path.join(__dirname, 'public')));
-
- app.get('/', function(req, res) {
-                res.sendFile(path.join(__dirname,'../') + '/index.html');
-            });
-
-
-=======
->>>>>>> parent of 652fd6de... express
 MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
   if (err) throw err;
 
@@ -69,9 +55,6 @@ MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
 //   database.collection('newCampgrounds').find().toArray(function(err, docs) {
 //       console.log(JSON.stringify(docs));
 //   });
-
-
-
 
 
   collection.find({}, { name: 1}).toArray(function(err, result) {
@@ -89,13 +72,14 @@ MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
 
       console.log(i);
       console.log(result[i].fullName);
+      console.log(result[i].url);
 
 
-      var table = document.getElementById('parkTable');
+      // var table = document.getElementById('parkTable');
 
-      var row = table.insertRow(0);
-      var cell1 = row.insertCell(0);
-      cell1.innerHTML = result[i].fullName;
+      // var row = table.insertRow(0);
+      // var cell1 = row.insertCell(0);
+      // cell1.innerHTML = result[i].fullName;
 
 
 
