@@ -23,9 +23,12 @@ app.route('/Employeeid').get(function(req, res)
             cursor.each(function(err, item) {
 
                 if (item != null) {
-                    str = str + "    Employee id  " + item.fullName + "</br>";
+                    str = str + "    Park Name  " + item.fullName + "</br>";
                 }
             });
+
+           
+
             res.send(str);
             db.close();
         });
@@ -33,12 +36,20 @@ app.route('/Employeeid').get(function(req, res)
 
   var server = app.listen(8080, function() {}); 
 
+var path = require('path');
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+ app.get('/', function(req, res) {
+                res.sendFile(__dirname + '/index.html');
+            });
 
 MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
   if (err) throw err;
 
   var database = db.db("coral");
   var collection = database.collection("newParks");
+
 
 // console.log(database);
 //   database.collection('newCampgrounds').find().toArray(function(err, docs) {

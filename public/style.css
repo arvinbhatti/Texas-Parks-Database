@@ -1,0 +1,57 @@
+
+
+#row3{
+	margin-top: 25px;
+}
+
+#row4{
+	margin-top: 25px;
+}
+
+#row5{
+	margin-top: 25px;
+}
+
+#row6{
+	margin-top: 50px;
+}
+
+
+#map {
+        height: 100%;
+        width: 500px;
+      }
+
+#weatherWidget{
+	
+	width: 500px;
+	background-color: gray;
+}
+
+.weather-first-row{
+	background-color: #90a4ae;
+}
+
+.weather-info-rows{
+	background-color: #37474f;
+	color: white;
+		
+
+}
+
+.weather-grid{
+	/*border-style: solid;*/
+}
+
+.weather-data{
+	font-family:'Courier New';
+	font-weight: bold;	
+}
+
+#icon-desc{
+	font-size: 5rem;
+}
+
+.weather-info-icons{
+	font-size: 2rem;
+}
