@@ -34,6 +34,20 @@ app.route('/Employeeid').get(function(req, res)
   var server = app.listen(8080, function() {}); 
 
 
+
+  var path = require('path');
+
+let reqPath = path.join(__dirname, '../../../');
+
+
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+ app.get('/', function(req, res) {
+                res.sendFile(path.join(__dirname,'../') + '/index.html');
+            });
+
+
 MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
   if (err) throw err;
 
@@ -44,6 +58,9 @@ MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
 //   database.collection('newCampgrounds').find().toArray(function(err, docs) {
 //       console.log(JSON.stringify(docs));
 //   });
+
+
+
 
 
   collection.find({}, { name: 1}).toArray(function(err, result) {
