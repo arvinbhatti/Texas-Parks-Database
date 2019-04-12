@@ -2,6 +2,9 @@ var express = require('express');
 
 var app = express();
 
+var path = require('path');
+
+app.use(express.static(path.join(__dirname, 'public')));
 var MongoClient = require('mongodb').MongoClient;
 var names;
 
@@ -112,15 +115,15 @@ app.get('/test',(req,res)=>{
    // res.json({test:"title",message:"root"});
 });
 
-  var server = app.listen(8080, function() {}); 
-
-var path = require('path');
-
-app.use(express.static(path.join(__dirname, 'public')));
-
  app.get('/', function(req, res) {
                 res.sendFile(__dirname + '/index.html');
             });
+
+
+var server = app.listen(8080, function() {}); 
+
+
+
 
 // MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
 //   if (err) throw err;
