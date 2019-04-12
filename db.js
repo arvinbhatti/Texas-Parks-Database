@@ -119,6 +119,26 @@ app.get('/test',(req,res)=>{
                 res.sendFile(__dirname + '/index.html');
             });
 
+app.get('/parks',function(req,res){
+  /* Need to complete park template*/
+  var name = req.param('name');
+   console.log(name);
+  res.send("Park!");
+});
+
+app.get('/campgrounds', function(req,res){
+  /*Need to complete campground template*/
+   var name = req.param('name');
+   console.log(name);
+  res.send("Campground!");
+});
+
+app.get('/visitorCenters', function(req,res){
+  /*Need to complete Visitor Center template*/
+  var name = req.param('name');
+   console.log(name);
+  res.send("Visitor Center!");
+});
 
 var server = app.listen(8080, function() {}); 
 
