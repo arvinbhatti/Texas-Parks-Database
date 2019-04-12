@@ -10,29 +10,55 @@ var names;
 const uri = "mongodb+srv://coral_username:coral_password@cluster0-yvnv5.mongodb.net/test?retryWrites=true";
 
 var str="";
+var json = [];
 
 
-app.route('/Employeeid').get(function(req, res)
+
+app.route('/json').get(function(req, res)
 
     {
         MongoClient.connect(uri, function(err, db) {
 
             var database = db.db("coral");
             var cursor = database.collection('newParks').find();
+
+
+              // console.log("before");
+
+              //  cursor.find({name: 'name'}).toArray(function(err, docs) {
+              //     if (err) 
+              //      throw err;
+
+              //     // assert.equal(2, docs.length);
+              //     console.log("Found the following records");
+              //     console.log(docs);
+              //   });
+
+
             //noinspection JSDeprecatedSymbols
             cursor.each(function(err, item) {
 
                 if (item != null) {
                     str = str + "    Park Name  " + item.fullName + "</br>";
+
+                    var object = [];
+
+                    object.push(item.fullName);
+                    object.push(item.latLong);
+                    object.push(item.parkCode);
+
+                    json.push(object);
                 }
             });
 
            
-
-            res.send(str);
+            res.send(json);
+            //res.send(str);
             db.close();
         });
     });
+
+
 
 app.get('/test',(req,res)=>{
     //res.sendFile(__dirname +"/views/test.html",);
@@ -64,11 +90,11 @@ app.use(express.static(path.join(__dirname, 'public')));
                 res.sendFile(__dirname + '/index.html');
             });
 
-MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
-  if (err) throw err;
+// MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
+//   if (err) throw err;
 
-  var database = db.db("coral");
-  var collection = database.collection("newParks");
+//   var database = db.db("coral");
+//   var collection = database.collection("newParks");
 
 
 // console.log(database);
@@ -77,22 +103,23 @@ MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
 //   });
 
 
-  collection.find({}, { name: 1}).toArray(function(err, result) {
-    if (err) 
-      throw err;
+  // collection.find({}, { name: 1}).toArray(function(err, result) {
+  //   if (err) 
+  //     throw err;
 
     console.log("Connected");
     
-    var length = result.length;
+    
+  //   var length = result.length;
 
-    var i;
+  //   var i;
 
-    for(i=0; i<length; i++){
+  //   for(i=0; i<length; i++){
 
 
-      console.log(i);
-      console.log(result[i].fullName);
-      console.log(result[i].url);
+  //     console.log(i);
+  //     console.log(result[i].fullName);
+  //     console.log(result[i].url);
 
 
       // var table = document.getElementById('parkTable');
@@ -104,10 +131,10 @@ MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
 
 
       
-    }
+  //   }
     
     
     
-    db.close();
-  });
-});
+  //   db.close();
+  // });
+// });
