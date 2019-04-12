@@ -17,7 +17,7 @@ var json = [];
 app.route('/json').get(function(req, res)
 
     {
-        MongoClient.connect(uri, function(err, db) {
+        MongoClient.connect(uri,{ useNewUrlParser: true },  function(err, db) {
 
             var database = db.db("coral");
             var cursor = database.collection('newParks').find();
@@ -41,19 +41,24 @@ app.route('/json').get(function(req, res)
                 if (item != null) {
                     str = str + "    Park Name  " + item.fullName + "</br>";
 
-                    var object = [];
-
+                    var object = {
+                      "fullName" : item.fullName,
+                      "latLong" : item.latLong,
+                      "parkCode" : item.parkCode,
+                      "address" : item.addresses
+                    };
+                    /*
                     object.push(item.fullName);
                     object.push(item.latLong);
                     object.push(item.parkCode);
-
+                    */
                     json.push(object);
                 }
             });
 
-           
-            res.send(json);
+           // res.send(json);
             //res.send(str);
+            res.json(json);
             db.close();
         });
     });
