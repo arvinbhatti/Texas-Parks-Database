@@ -11,32 +11,24 @@ const uri = "mongodb+srv://coral_username:coral_password@cluster0-yvnv5.mongodb.
 
 var str="";
 var json = [];
+var parks = [];
+var campgrounds=[];
+var visitorCenters=[];
 
 
 
 app.route('/json').get(function(req, res)
 
     {
+     
         MongoClient.connect(uri,{ useNewUrlParser: true },  function(err, db) {
 
             var database = db.db("coral");
             var cursor = database.collection('newParks').find();
 
-
-              // console.log("before");
-
-              //  cursor.find({name: 'name'}).toArray(function(err, docs) {
-              //     if (err) 
-              //      throw err;
-
-              //     // assert.equal(2, docs.length);
-              //     console.log("Found the following records");
-              //     console.log(docs);
-              //   });
-
-
+          
             //noinspection JSDeprecatedSymbols
-            cursor.each(function(err, item) {
+            cursor.limit(5).each(function(err, item) {
 
                 if (item != null) {
                     str = str + "    Park Name  " + item.fullName + "</br>";
@@ -52,13 +44,48 @@ app.route('/json').get(function(req, res)
                     object.push(item.latLong);
                     object.push(item.parkCode);
                     */
-                    json.push(object);
+                    
+                    parks.push(object);
+                    //sconsole.log(parks);
                 }
             });
+            
+            cursor = database.collection('newCampgrounds').find();
+            cursor.limit(5).each(function(err, item){
+              if(item!=null){
+                //console.log(item);
+                //console.log(item.name);
+                var object = {
+                "name" : item.name, 
+                "address" : item.addresses
+                };
 
+                campgrounds.push(object);
+              }
+              
+            });
+            
+
+            cursor = database.collection('newVisitorCenters').find();
+            cursor.limit(5).each(function(err, item){
+              if(item!=null){
+                var object = {
+                "name" : item.name, 
+                "address" : item.addresses
+                };
+                visitorCenters.push(object);
+              }
+              
+            });
+            var collections =[];
+            collections.push(parks);
+            collections.push(campgrounds);
+            collections.push(visitorCenters);
            // res.send(json);
             //res.send(str);
-            res.json(json);
+            //console.log(models);
+           // console.log(collections);
+            res.json(collections);
             db.close();
         });
     });

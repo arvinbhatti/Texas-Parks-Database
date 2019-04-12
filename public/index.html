@@ -20,7 +20,7 @@
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
   <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-
+  <link rel="stylesheet" type="text/css" href="style.css">
 
   <!-- Custom styles for this template -->
 <!--   <link href="css/landing-page.min.css" rel="stylesheet">
@@ -124,77 +124,114 @@
   </section>
 
 
-        
+   <div id="table" class="carousel slide" data-ride="carousel">
 
+  <!-- Indicators -->
+  <ul class="carousel-indicators">
+    <li data-target="#table" data-slide-to="0" class="active"></li>
+    <li data-target="#table" data-slide-to="1"></li>
+    <li data-target="#table" data-slide-to="2"></li>
+  </ul>
 
-  <!-- List of Parks -->
-<table id="parkTable" class="table">
+  <!-- The slideshow -->
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+     <table id="parkTable" class="table">
 
-
+<!--
 <p>What type of trip would you like to plan?</p>
 <div class="pagination">
   <a href="#" class="active" >National Parks</a>
   <a href="trails.html">Trails</a>
   <a href="campsites.html">Campsites</a>
 </div>
+-->
 
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Park Name</th>
-      <th scope="col">Location</th>
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Park Name</th>
+          <th scope="col">Location</th>
       <!--<th scope="col">Acres</th>-->
-    </tr>
-  </thead>
-  <tbody id="tableBody">
-    <!--
-    <tr>
-      <th scope="row">1</th>
-      <td><a href="CottonWoodGroupCamp.html">Cotton Wood Group Camp</a></td>
-      <td>Big Bend National Park, TX 79834-0129</td>
-      <td>4.23</td>
-    </tr>  
-    <tr>
-      <th scope="row">2</th>
-      <td><a href="PineCanyonTrail.html">Pine Canyon Trail</a></td>
-      <td>Big Bend National Park, TX 79834-0129</td>
-      <td>4.23</td>
-    </tr>  
-    <tr>
-      <th scope="row">3</th>
-      <td><a href="ChisosBasinCamp.html">Chisos Basin Camp</a></td>
-      <td>Big Bend National Park, TX 79834-0129</td>
-      <td>4.23</td>
-    </tr>  
-    <tr>
-      <th scope="row">4</th>
-      <td><a href="JuniperCanyonTrail.html">Juniper Canyon Trail</a></td>
-      <td>Big Bend National Park, TX 79834-0129</td>
-      <td>4.23</td>
-    </tr> 
-    <tr>
-      <th scope="row">5</th>
-      <td><a href="RioGrandeVilliageCamp.html">Rio Grande Villiage</a></td>
-      <td>Big Bend National Park, TX 79834-0129</td>
-      <td>4.23</td>
-    </tr>
-     <tr>
-      <th scope="col">#</th>
-      <th scope="col">Park Name</th>
-      <th scope="col">Location</th>
-      <th scope="col">Acres</th>
-    </tr>
-  -->
-  </tbody>
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col"></th>
-      <th scope="col"></th>
-      <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody id="parkTableBody">
+    
+      </tbody>
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col"></th>
+          <th scope="col"></th>
+          <th scope="col"></th>
       <!--<th scope="col"></th>-->
-    </tr>
-  </thead>
-</table>
+        </tr>
+     </thead>
+    </table>
+
+    </div>
+    <div class="carousel-item">
+      <table id="campsiteTable" class="table">
+
+
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Campsite Name</th>
+          <th scope="col">Location</th>
+      <!--<th scope="col">Acres</th>-->
+        </tr>
+      </thead>
+      <tbody id="campsiteTableBody">
+    
+      </tbody>
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col"></th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+      <!--<th scope="col"></th>-->
+        </tr>
+     </thead>
+    </table>
+    </div>
+    <div class="carousel-item">
+      <table id="visitorTable" class="table">
+
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Visitor Center Name</th>
+          <th scope="col">Location</th>
+      <!--<th scope="col">Acres</th>-->
+        </tr>
+      </thead>
+      <tbody id="visitorTableBody">
+    
+      </tbody>
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col"></th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+      <!--<th scope="col"></th>-->
+        </tr>
+     </thead>
+    </table>
+    </div>
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="carousel-control-prev" href="#table" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#table" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+
+</div>     
+
+
+
 
   <!-- Dropdown filters -->
 
@@ -478,19 +515,57 @@ $(document).ready(function(){
         fetch(url).then(response => response.json())
         .then( (result) => {
             console.log('success:', result)
-            let table=document.getElementById('tableBody');
+            let table=document.getElementById('parkTableBody');
+            var parks = result[0];
             for(var i=0; i<5; i++){
               var row = table.insertRow();
               var cell1 = row.insertCell(0);
               var cell2 = row.insertCell(1);
               var cell3 = row.insertCell(2);
               cell1.innerHTML = `<b>${i+1}</b>`;
-              cell2.innerHTML = result[i].fullName;
-              cell3.innerHTML = `${result[i].address[0].city}, ${result[i].address[0].stateCode} ${result[i].address[0].postalCode}`;
+              cell2.innerHTML = parks[i].fullName;
+              if(parks[i].address){
+               cell3.innerHTML = `${parks[i].address[0].city}, ${parks[i].address[0].stateCode} ${parks[i].address[0].postalCode}`; 
+             }else{
+              cell3.innerHTML="unavailable";
+             }
+              
            
             }
-           
+
+          table = document.getElementById('campsiteTableBody');
+           var campsites=result[1];
+           for(var i=0; i<5; i++){
+             var row = table.insertRow();
+              var cell1 = row.insertCell(0);
+              var cell2 = row.insertCell(1);
+              var cell3 = row.insertCell(2);
+              cell1.innerHTML = `<b>${i+1}</b>`;
+              cell2.innerHTML = campsites[i].name;
+              if(campsites[i].address){
+               cell3.innerHTML = `${campsites[i].address[0].city}, ${campsites[i].address[0].stateCode} ${campsites[i].address[0].postalCode}`;
+             }else{
+              cell3.innerHTML="unavailable";
+             }
+              
+           }
             
+          table = document.getElementById('visitorTableBody');
+           var visitorCenters=result[2];
+           for(var i=0; i<5; i++){
+             var row = table.insertRow();
+              var cell1 = row.insertCell(0);
+              var cell2 = row.insertCell(1);
+              var cell3 = row.insertCell(2);
+              cell1.innerHTML = `<b>${i+1}</b>`;
+              cell2.innerHTML = visitorCenters[i].name;
+               if(visitorCenters[i].address){
+               cell3.innerHTML = `${visitorCenters[i].address[0].city}, ${visitorCenters[i].address[0].stateCode} ${visitorCenters[i].address[0].postalCode}`;
+             }else{
+              cell3.innerHTML="unavailable";
+             }
+              
+           }
             
         })
         .catch(error => console.log('error:', error));
