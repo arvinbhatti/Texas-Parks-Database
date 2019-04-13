@@ -4,6 +4,8 @@ var app = express();
 
 var path = require('path');
 
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 var MongoClient = require('mongodb').MongoClient;
 var names;
@@ -121,26 +123,36 @@ app.get('/test',(req,res)=>{
 
 app.get('/parks',function(req,res){
   /* Need to complete park template*/
-  var name = req.param('name');
+  var name = req.query.name;
    console.log(name);
-  res.send("Park!");
+   
+   res.sendFile(__dirname+'/public/park.html');
+  //res.send("Park!");
 });
 
 app.get('/campgrounds', function(req,res){
   /*Need to complete campground template*/
-   var name = req.param('name');
+   var name = req.query.name
    console.log(name);
-  res.send("Campground!");
+   res.sendFile(__dirname + '/public/campsite.html');
+  //res.send("Campground!");
 });
 
 app.get('/visitorCenters', function(req,res){
   /*Need to complete Visitor Center template*/
-  var name = req.param('name');
+  var name = req.query.name;
    console.log(name);
-  res.send("Visitor Center!");
+   res.sendFile(__dirname + '/public/visitorCenter.html');
+  //res.send("Visitor Center!");
 });
 
-var server = app.listen(8080, function() {}); 
+//var server = app.listen(8080, function() {}); 
+const server = app.listen(8080, () => {
+  const host = server.address().address;
+  const port = server.address().port;
+
+  console.log(`Example app listening at http://${host}:${port}`);
+});
 
 
 

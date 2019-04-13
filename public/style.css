@@ -1,6 +1,11 @@
-.carousel-control-next ,.carousel-control-prev{
+
+
+#table  .carousel-control-prev, 
+#table  .carousel-control-next{
+    top: 50%;
+    bottom: 50%;
     filter: invert(100%);
-} 
+}
 
 #row3{
 	margin-top: 25px;

@@ -1,4 +1,4 @@
-let url="http://localhost:8080/json";
+let url="/json";
         fetch(url).then(response => response.json())
         .then( (result) => {
             console.log('success:', result)
