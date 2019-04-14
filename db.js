@@ -4,7 +4,8 @@ var app = express();
 
 var path = require('path');
 
-
+app.set('views', './public');
+app.set('view engine', 'pug');
 
 app.use(express.static(path.join(__dirname, 'public')));
 var MongoClient = require('mongodb').MongoClient;
@@ -125,8 +126,56 @@ app.get('/parks',function(req,res){
   /* Need to complete park template*/
   var name = req.query.name;
    console.log(name);
+   MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
+
+      var database = db.db("coral");
+      var query = { fullName: name};
+      var cursor = database.collection('newParks').find(query).toArray(function(err, result){
+        if(err) throw err;
+        //console.log(result[0].fullName);
+        var fullName = result[0].fullName;
+        var description = result[0].description;
+        var phone = result[0].contacts.phoneNumbers[0].phoneNumber;
+        if(result[0].contacts.emailAddresses[0].emailAddress){
+          var email = result[0].contacts.emailAddresses[0].emailAddress;
+        }
+        var addresses = result[0].addresses;
+        var address = "";
+        for(var x in addresses){
+          console.log(addresses[x].type);
+          if(addresses[x].type =="Physical"){
+
+            address=addresses[x].line1;
+            
+           var cityState="";
+            cityState+=addresses[x].city;
+            cityState+=", "
+            cityState+=addresses[x].stateCode;
+            cityState+=" ";
+            cityState+=addresses[x].postalCode;
+            break;
+          }else{
+            address = "unavailable";
+          }
+        }
+
+        /* Left off here, need to finish getting all info for template */
+        console.log(address);
+        res.render('park', { title: fullName, 
+          description: description, 
+          phoneNumber: phone, 
+          email: email,
+          address: address,
+          cityState: cityState 
+        });
+        db.close
+      });
+            
+      
+  });
    
-   res.sendFile(__dirname+'/public/park.html');
+  // res.sendFile(__dirname+'/public/park.html');
+ // res.render('park', { title: 'Hey'});
   //res.send("Park!");
 });
 

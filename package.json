@@ -3,7 +3,8 @@
   "name": "package",
   "version": "5.0.3",
   "scripts": {
-    "start": "node db.js"
+    "start": "node db.js",
+    "watch": "nodemon ./db.js"
   },
   "description": "An HTML landing page template built with Bootstrap",
   "keywords": [
@@ -40,6 +41,7 @@
     "nconf": "^0.10.0",
     "node": "^11.13.0",
     "nodejs": "0.0.0",
+    "pug": "^2.0.3",
     "requirejs": "^2.3.6",
     "simple-line-icons": "^2.4.1"
   },
@@ -54,7 +56,8 @@
     "gulp-rename": "1.4.0",
     "gulp-sass": "4.0.2",
     "gulp-uglify": "3.0.1",
-    "merge-stream": "^1.0.1"
+    "merge-stream": "^1.0.1",
+    "nodemon": "^1.18.11"
   },
   "main": "about.js"
 }
