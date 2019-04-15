@@ -7,7 +7,7 @@ html
     link(rel='stylesheet', type='text/css', href='https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons-wind.min.css')
     link(rel='stylesheet', type='text/css', href='https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.css')
   body
-    nav.navbar.navbar-light.bg-light.static-top
+    nav.navbar.navbar-dark.bg-dark.static-top
       // Navbar content
       a.navbar-brand(href='index.html') Texas Parks Database
       button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNavAltMarkup', aria-controls='navbarNavAltMarkup', aria-expanded='false', aria-label='Toggle navigation')
@@ -17,10 +17,10 @@ html
           a.nav-item.nav-link.active(href='index.html')
             | Home
             span.sr-only (current)
-          //
-            <a class="nav-item nav-link" href="#">Parks</a>
-            <a class="nav-item nav-link" href="#">Campgrounds</a>
-            <a class="nav-item nav-link" href="#">Trails</a>
+          
+            <a class="nav-item nav-link" href="/allParks">Parks</a>
+            <a class="nav-item nav-link" href="/allCampgrounds">Campgrounds</a>
+            <a class="nav-item nav-link" href="/allVisitorCenters">Visitor Centers</a>
           a.nav-item.nav-link(href='about.html') About
     span.navbar-toggler-icon
     #navbarNavAltMarkup.collapse.navbar-collapse

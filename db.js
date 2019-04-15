@@ -20,7 +20,7 @@ var json = [];
 var parks = [];
 var campgrounds=[];
 var visitorCenters=[];
-
+var allParks=[];
 
 
 app.route('/json').get(function(req, res)
@@ -168,7 +168,7 @@ app.get('/parks',function(req,res){
           address: address,
           cityState: cityState 
         });
-        db.close
+        db.close();
       });
             
       
@@ -195,6 +195,60 @@ app.get('/visitorCenters', function(req,res){
   //res.send("Visitor Center!");
 });
 
+app.get('/allParks', function(req,res){
+
+  //allParks=[];
+  MongoClient.connect(uri,{ useNewUrlParser: true },  function(err, db) {
+
+            var database = db.db("coral");
+            var cursor = database.collection('newParks').find({}).toArray(function(err,result){
+              if (err) throw err;
+              console.log(result);
+              res.send(result);
+              
+            });
+           
+      db.close();
+  });
+
+         //   console.log(allParks);
+  //res.json(allParks);
+});
+
+app.get('/allCampgrounds', function(req,res){
+  MongoClient.connect(uri,{ useNewUrlParser: true },  function(err, db) {
+
+            var database = db.db("coral");
+            var cursor = database.collection('newCampgrounds').find({}).toArray(function(err,result){
+              if (err) throw err;
+              console.log(result);
+              res.send(result);
+              
+            });
+           
+      db.close();
+  });
+  
+  //res.send('AllCampgrounds');
+});
+
+app.get('/allVisitorCenters', function(req,res){
+  MongoClient.connect(uri,{ useNewUrlParser: true },  function(err, db) {
+
+            var database = db.db("coral");
+            var cursor = database.collection('newVisitorCenters').find({}).toArray(function(err,result){
+              if (err) throw err;
+              console.log(result);
+              res.send(result);
+              
+            });
+           
+      db.close();
+  });
+  
+  //res.send('AllVisitorCenters');
+})
+
 //var server = app.listen(8080, function() {}); 
 const server = app.listen(8080, () => {
   const host = server.address().address;
@@ -202,6 +256,7 @@ const server = app.listen(8080, () => {
 
   console.log(`Example app listening at http://${host}:${port}`);
 });
+
 
 
 
