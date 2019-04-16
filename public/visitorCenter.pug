@@ -1,7 +1,7 @@
 doctype html
 html
   head
-    title= `${title}`
+    title
     link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
     link(rel='stylesheet', type='text/css', href='style.css')
     link(rel='stylesheet', type='text/css', href='https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons-wind.min.css')
@@ -17,56 +17,30 @@ html
           a.nav-item.nav-link.active(href='index.html')
             | Home
             span.sr-only (current)
-          
-            <a class="nav-item nav-link" href="/allParks">Parks</a>
-            <a class="nav-item nav-link" href="/allCampgrounds">Campgrounds</a>
-            <a class="nav-item nav-link" href="/allVisitorCenters">Visitor Centers</a>
+          a.nav-item.nav-link(href='allParks.html') Parks
+          a.nav-item.nav-link(href='allCampgrounds.html') Campgrounds
+          a.nav-item.nav-link(href='allVisitorCenters.html') Visitor Centers
           a.nav-item.nav-link(href='about.html') About
-    span.navbar-toggler-icon
-    #navbarNavAltMarkup.collapse.navbar-collapse
-      .navbar-nav
-        a.nav-item.nav-link.active(href='index.html')
-          | Home
-          span.sr-only (current)
-        a.nav-item.nav-link(href='#') Parks
-        a.nav-item.nav-link(href='#') Campgrounds
-        a.nav-item.nav-link(href='#') Visitor Centers
-        a.nav-item.nav-link(href='about.html') About
     // content
     .container
-      h1#parkName.my-4= `${title}`
+      h1#centerName.my-4=title
       .row
-        //
-          <div class="col-md-6" id="image">
-          <img class="img-fluid" src="https://www.nps.gov/common/uploads/structured_data/3C84EF64-1DD8-B71B-0B44D9F693CAA78C.jpg" alt="">
-          </div>
-        #carouselExampleIndicators.carousel.slide.col-md-6(data-ride='carousel')
-          ol.carousel-indicators
-            li.active(data-target='#carouselExampleIndicators', data-slide-to='0')
-            li(data-target='#carouselExampleIndicators', data-slide-to='1')
-            li(data-target='#carouselExampleIndicators', data-slide-to='2')
-          #pictures.carousel-inner
-            
-          a.carousel-control-prev(href='#carouselExampleIndicators', role='button', data-slide='prev')
-            span.carousel-control-prev-icon(aria-hidden='true')
-            span.sr-only Previous
-          a.carousel-control-next(href='#carouselExampleIndicators', role='button', data-slide='next')
-            span.carousel-control-next-icon(aria-hidden='true')
-            span.sr-only Next
+        #image.col-md-6
+          img.img-fluid(src='https://austinot.com/wp-content/uploads/2015/03/barton-creek-greenbelt-1024x473.jpg', alt='')
         .col-md-6
           h4.my-3 Description
           p#description=`${description}`
       #row3.row
-        .col-md-6
-          h4 Park Info
+        .col-md-4
+          h4 Center Info
           address
-            p(style='padding-left: 20px;')
-              b Phone:
-              |  #{phoneNumber}
-            p(style='padding-left: 20px;')
+            p#phone(style='padding-left: 20px;')
+              b Phone: 
+              | #{phoneNumber}
+            p#email(style='padding-left: 20px;')
               b Email: 
               a(href=`mailto:${email}`) #{email}
-            p(style='padding-left: 20px;')
+            p#address(style='padding-left: 20px;')
               b Address: 
               br
               | #{address}
@@ -80,22 +54,37 @@ html
               br
               | Longitude: 
               span#Longitude=`${lon}`
-        .col-md-6
+        .col-md-4
+          h4 Operating Hours
+          p#operatingHours
+            b Monday: 
+            span=` ${monday}`
+            br
+            b Tuesday:
+            span=` ${tuesday}`
+            br
+            b Wednesday:
+            span=` ${wednesday}`
+            br
+            b Thursday:
+            span=` ${thursday}`
+            br
+            b Friday: 
+            span=` ${friday}`
+            br
+            b Saturday: 
+            span=` ${saturday}`
+            br
+            b Sunday: 
+            span=` ${sunday}`
+            br
+        .col-md-4
           h4 Directions
-          p#directions=`${directionsInfo}`
+          p#directions=directionsInfo
           a.btn.btn-primary(style='margin-left: 20px;', href=`${directionsUrl}`) More Info
-        //
-          <h5>Campground Map</h5>
-          <ul>
-          <li>
-          <a href="https://austinot.com/wp-content/uploads/2015/03/Austin-Greenbelt-Access-Points-Map.jpg">Map of entrances</a>
-          </li>
-          </ul>
+
+
       #row4.row
-        .col-md-12
-          h4.my-3 General Weather Details
-          p#generalWeather=`${weatherInfo}`
-      #row5.row
         .col.map
           h3.my-3 Map
           // <img class="img-fluid" src="http://placehold.it/700x500" alt="">
@@ -126,7 +115,7 @@ html
               .col-sm-6(style='text-align: center;')
                 h4#weather-summary.weather-data
                 h1#weather-temperature.weather-data
-                h4#weather-location.weather-data=`${cityState}`
+                h3#weather-location.weather-data Austin, TX
               .col-sm-6(style='text-align: center;')
                 i#icon-desc.wi
             .row.h-25.weather-info-rows
@@ -152,7 +141,7 @@ html
                   i.wi.wi-day-sunny.weather-info-icons
                   p#uvIndex
       // /.row
-      #row6
+      #row5
         // Related Projects Row
         h3.my-4 Related Campgrounds
         .row
@@ -174,24 +163,5 @@ html
         script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', integrity='sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q', crossorigin='anonymous')
         script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js', integrity='sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl', crossorigin='anonymous')
         script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js')
-        //script(type='text/javascript').
-          var pictures = document.getElementById('pictures');
-          var numPics = #{images.length};
-          //console.log(array);
-          for(var i=0; i<numPics; i++){
-          let pic = document.createElement('div');
-          if(i==0){
-          pic.className='carousel-item active';
-          }else{
-          pic.className='carousel-item';
-          }
-          let image=document.createElement('img');
-          image.className='d-block w-100';
-          image.src='#images[0].url';
-          image.alt='Slide' + i;
-          pic.appendChild(image);
-          pictures.appendChild(pic);
-          }
         script(type='application/javascript', src='darkSkyWeather.js')
         script(type='application/javascript', src='maps.js', defer='')
-        

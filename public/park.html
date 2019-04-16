@@ -20,8 +20,8 @@
       <a class="nav-item nav-link active" href="index.html">Home<span class="sr-only">(current)</span></a>
       
       <a class="nav-item nav-link" href="/allParks">Parks</a>
-      <a class="nav-item nav-link" href="#">Campgrounds</a>
-      <a class="nav-item nav-link" href="#">Trails</a>
+      <a class="nav-item nav-link" href="/allCampgrounds">Campgrounds</a>
+      <a class="nav-item nav-link" href="/allVisitorCenters">Trails</a>
     
       <a class="nav-item nav-link" href="about.html">About</a>
       
@@ -56,16 +56,8 @@
     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
     <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
   </ol>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img class="d-block w-100" src="https://www.nps.gov/common/uploads/structured_data/3C84EF64-1DD8-B71B-0B44D9F693CAA78C.jpg" alt="First slide">
-    </div>
-    <div class="carousel-item">
-      <img class="d-block w-100" src="https://www.nps.gov/common/uploads/structured_data/3C84F0B8-1DD8-B71B-0BE8B78FCC3B52A3.jpg" alt="Second slide">
-    </div>
-    <div class="carousel-item">
-      <img class="d-block w-100" src="https://www.nps.gov/common/uploads/structured_data/3C84F209-1DD8-B71B-0B6AA2D4E9522573.jpg" alt="Third slide">
-    </div>
+  <div id="pictures" class="carousel-inner">
+    
   </div>
   <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -92,6 +84,9 @@
     <p style="padding-left: 20px;"><b>Phone: </b>432-477-2251</p>
     <p style="padding-left: 20px;"><b>Email: </b><a href="mailto:bibe_info@nps.gov">bibe_info@nps.gov</a></p>
     <p style="padding-left: 20px;"><b>Address: </b><br>1 Panther Junction<br>Big Bend National Park TX 79834</p>
+    <p style="padding-left: 20px;"><b>Latitude/Longitude:</b><br>Latitude: <span id="Latitude">lat</span><br>Longitude: <span id="Longitude">lon</span></p>
+    
+    
   </address>
     </div>
     
@@ -250,5 +245,82 @@
 <script type="application/javascript" src="darkSkyWeather.js"></script>
 <script type="application/javascript" src="maps.js" defer></script> 
 <!--<script type="application/javascript" src="test.js"></script>-->
+<script type="text/javascript">
+  var array = [ { credit: 'Mary Kay Manning',
+    altText:
+     'Knobby cypress knees resembling cave stalagmites protrude up from a pool of water.',
+    title: 'Cypress Knees',
+    id: '257',
+    caption:
+     'Knobby knees, extensions of the root system, are a distinctive feature of the bald cypress trees.',
+    url:
+     'https://www.nps.gov/common/uploads/structured_data/3C79FB5F-1DD8-B71B-0BFB74A6B66A1D15.jpg' },
+  { credit: 'NPS Photo/Matt Fagan',
+    altText:
+     'A dense stand of funnel-shaped carnivorous pitcher plants awaiting their next insect meal.',
+    title: 'Pitcher Plants',
+    id: '259',
+    caption:
+     'Look for carnivorous pitcher plants in bogs along the Sundew Trail and Pitcher Plant Trail.',
+    url:
+     'https://www.nps.gov/common/uploads/structured_data/3C79FDD2-1DD8-B71B-0BF21FAC5DB9FD63.jpg' },
+  { credit: 'NPS Photo',
+    altText:
+     'Three people paddling kayaks along a waterway densely lined with bald cypress trees.',
+    title: 'Kayakers in Cooks Lake',
+    id: '261',
+    caption:
+     'Kayaking is a popular way to explore the many waterways in the Big Thicket. Here, kayakers paddle along the Cooks Lake Paddling Trail near Beaumont.',
+    url:
+     'https://www.nps.gov/common/uploads/structured_data/3C7A0028-1DD8-B71B-0B8C3A7464C599D7.jpg' },
+  { credit: 'NPS Photo',
+    altText:
+     'The yellow flowers of pitcher plants bloom beneath longleaf pine trees.',
+    title: 'Pitcher Plants and Pines',
+    id: '262',
+    caption:
+     'Early April is the best time to see wildflowers blooming in the Big Thicket..',
+    url:
+     'https://www.nps.gov/common/uploads/structured_data/3C7A0140-1DD8-B71B-0BBF154BB71CE384.jpg' },
+  { credit: 'Max Harper',
+    altText:
+     'A woman and her dog on a metal bridge spanning a creek lined with bald cypress trees.',
+    title: 'Hiker on bridge over Village Creek',
+    id: '341',
+    caption:
+     'The view from the bridge over Village Creek is a highlight for hikers on the Kirby Nature Trail.',
+    url:
+     'https://www.nps.gov/common/uploads/structured_data/3C7A6576-1DD8-B71B-0B4335D87A2BE44D.png' } ];
+
+  var pictures = document.getElementById('pictures');
+  console.log("HI");
+  for(var i=0; i<array.length; i++){
+    let pic = document.createElement('div');
+    if(i==0){
+      pic.className='carousel-item active';
+    }else{
+      pic.className='carousel-item';
+    }
+    let image=document.createElement('img');
+    image.className='d-block w-100';
+    image.src=array[i].url;
+    image.alt='Slide' + i;
+    pic.appendChild(image);
+    pictures.appendChild(pic);
+  }
+</script>
 </body>
 </html>
+
+<!--
+  <div class="carousel-item active">
+      <img class="d-block w-100" src="https://www.nps.gov/common/uploads/structured_data/3C84EF64-1DD8-B71B-0B44D9F693CAA78C.jpg" alt="First slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="https://www.nps.gov/common/uploads/structured_data/3C84F0B8-1DD8-B71B-0BE8B78FCC3B52A3.jpg" alt="Second slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="https://www.nps.gov/common/uploads/structured_data/3C84F209-1DD8-B71B-0B6AA2D4E9522573.jpg" alt="Third slide">
+    </div>
+
+    ->

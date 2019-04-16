@@ -12,7 +12,16 @@ let url="/allCampgrounds";
 		    cardBody.className = 'card-body';
 
 		    let image = document.createElement('img');
-		    image.src = result[i].images[0].url;
+		    if(result[i].images != undefined){
+		    	if(result[i].images[i] != undefined){
+		    	image.src = result[i].images[0].url;
+		    	}else{
+		    	image.src="https://twu.edu/media/images/communication-sciences/Photo-Unavailbale-300-Square.jpg";
+		    	}
+		    }else{
+		    	image.src="https://twu.edu/media/images/communication-sciences/Photo-Unavailbale-300-Square.jpg";
+		    }
+		    
 		    image.className = 'card-img-top';
 
 		   let body = document.createElement('div');
@@ -20,7 +29,7 @@ let url="/allCampgrounds";
 		    body.className = 'card-body';
 		    let cardText = document.createElement('h5');
 		    cardText.className = 'card-text';
-		    cardText.innerHTML = `<a href='/parks?name=${result[i].fullName}'> ${result[i].fullName}</a>`;
+		    cardText.innerHTML = `<a href='/campgrounds?name=${result[i].name}'> ${result[i].name}</a>`;
 		    body.appendChild(cardText);
 
 

@@ -21,8 +21,8 @@ window.onload = function() {
   windSpeed = document.getElementById("windSpeed");
   weatherSummary = document.getElementById("weather-summary");
   precipitationProb = document.getElementById("preciProb");
-  lat = 30.2586;
-  long = -97.8242;
+  lat = parseFloat(document.getElementById('Latitude').innerHTML);
+  long = parseFloat(document.getElementById('Longitude').innerHTML);
   showWeather(lat, long);
 }
 
