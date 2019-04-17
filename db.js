@@ -184,10 +184,17 @@ app.get('/parks',function(req,res){
           lat=obj.lat;
           lon=obj.long;
        }
+       /*
        var images=[];
       if(result[0].images.length > 0 || result[0].images != undefined){
         images=result[0].images;
       }
+      */
+      var image="";
+      if(result[0].images.length > 0 || result[0].images != undefined){
+        image=result[0].images[0].url;
+      }
+      //console.log(image);
       //console.log(images);
         /* Left off here, need to finish getting all info for template */
        // console.log(address);
@@ -202,7 +209,7 @@ app.get('/parks',function(req,res){
           weatherInfo: weatherInfo,
           lat: lat,
           lon: lon,
-          images: images
+          images: image
         });
         db.close();
       });
@@ -374,16 +381,22 @@ app.get('/visitorCenters', function(req,res){
         //console.log(result[0].fullName);
         var fullName = result[0].name;
         var description = result[0].description;
-        var phone="";
+        var phone="unavailable";
         if(result[0].contacts.phoneNumbers != undefined){
-          phone = result[0].contacts.phoneNumbers[0].phoneNumber;
+          if(result[0].contacts.phoneNumbers[0] != undefined){
+            phone = result[0].contacts.phoneNumbers[0].phoneNumber;
+          }
+          
+        }
+        var email="";
+        if(result[0].contacts.emailAddresses !=undefined){
+          if(result[0].contacts.emailAddresses[0] != undefined){
+          email = result[0].contacts.emailAddresses[0].emailAddress;
+        }
         }
         
-        if(result[0].contacts.emailAddresses[0].emailAddress){
-          var email = result[0].contacts.emailAddresses[0].emailAddress;
-        }
         var addresses = result[0].addresses;
-        var address = "";
+        var address = "unavailable";
         if(result[0].addresses != undefined){
         for(var x in addresses){
           console.log(addresses[x].type);

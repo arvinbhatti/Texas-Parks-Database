@@ -40,19 +40,7 @@ html
           <div class="col-md-6" id="image">
           <img class="img-fluid" src="https://www.nps.gov/common/uploads/structured_data/3C84EF64-1DD8-B71B-0B44D9F693CAA78C.jpg" alt="">
           </div>
-        #carouselExampleIndicators.carousel.slide.col-md-6(data-ride='carousel')
-          ol.carousel-indicators
-            li.active(data-target='#carouselExampleIndicators', data-slide-to='0')
-            li(data-target='#carouselExampleIndicators', data-slide-to='1')
-            li(data-target='#carouselExampleIndicators', data-slide-to='2')
-          #pictures.carousel-inner
-            
-          a.carousel-control-prev(href='#carouselExampleIndicators', role='button', data-slide='prev')
-            span.carousel-control-prev-icon(aria-hidden='true')
-            span.sr-only Previous
-          a.carousel-control-next(href='#carouselExampleIndicators', role='button', data-slide='next')
-            span.carousel-control-next-icon(aria-hidden='true')
-            span.sr-only Next
+        img.my-4.col-md-6(style='width: 25rem; height: 20rem;', src=`${images}`)
         .col-md-6
           h4.my-3 Description
           p#description=`${description}`
