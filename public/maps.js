@@ -6,7 +6,7 @@ var name;
 document.addEventListener('DOMContentLoaded', function () {
     latitude = parseFloat(document.getElementById('Latitude').innerHTML);
     longitude= parseFloat(document.getElementById('Longitude').innerHTML);
-    name=document.getElementById('parkName').innerHTML;
+    name=document.getElementById('Name').innerHTML;
     console.log(latitude);
     console.log(longitude);
     //console.log(title);

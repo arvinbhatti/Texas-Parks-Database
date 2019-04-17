@@ -446,7 +446,7 @@ app.get('/visitorCenters', function(req,res){
        }
        
        var parkCode=result[0].parkCode;
-       console.log(parkCode);
+      // console.log(parkCode);
        var latLong="";
 
        var lat="";
@@ -493,7 +493,8 @@ app.get('/visitorCenters', function(req,res){
           thursday: Thursday,
           friday: Friday,
           saturday: Saturday,
-          sunday: Sunday
+          sunday: Sunday,
+          parkCode
         });
         db.close();
       });
@@ -556,6 +557,24 @@ app.get('/allVisitorCenters', function(req,res){
   });
   
   //res.send('AllVisitorCenters');
+});
+
+app.get('/getLatLong', function(req,res){
+  console.log(req.query);
+    var parkCode = req.query.parkCode;
+    //console.log(parkCode);
+   MongoClient.connect(uri,{ useNewUrlParser: true },  function(err, db) {
+           
+            var database = db.db("coral");
+            var cursor = database.collection('newParks').find({parkCode: parkCode}).toArray(function(err,result){
+              if (err) throw err;
+              //console.log(result[0]);
+              res.send(result);
+              
+            });
+           
+      db.close();
+  });
 })
 
 //var server = app.listen(8080, function() {}); 
