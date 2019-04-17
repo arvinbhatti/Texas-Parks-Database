@@ -11,7 +11,9 @@ var long ;
 
 
 window.onload = function() {
-  humidity = document.getElementById("humidity");
+  setTimeout(function(){
+   console.log("wait");
+   humidity = document.getElementById("humidity");
   weatherIcon = document.getElementById("icon-desc");
  
   uvIndex = document.getElementById("uvIndex");
@@ -24,6 +26,8 @@ window.onload = function() {
   lat = parseFloat(document.getElementById('Latitude').innerHTML);
   long = parseFloat(document.getElementById('Longitude').innerHTML);
   showWeather(lat, long);
+ }, 3000);
+  
 }
 
 

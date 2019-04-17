@@ -58,6 +58,9 @@ html
             p#campnum(style='padding-left: 20px;')
               b Campsites: 
               span=totalsites
+              p(style='padding-left: 20px;')
+              b Park Code: 
+              span#parkCode=parkCode
         .col-md-6
           h4 Operating Hours
           p#operatingHours
@@ -112,8 +115,8 @@ html
             .row.h-50.align-items-center.weather-first-row
               .col-sm-6(style='text-align: center;')
                 h4#weather-summary.weather-data
-                h1#weather-temperature.weather-data
-                h3#weather-location.weather-data Austin, TX
+                h2#weather-temperature.weather-data
+                h4#weather-location.weather-data=`${cityState}`
               .col-sm-6(style='text-align: center;')
                 i#icon-desc.wi
             .row.h-25.weather-info-rows
@@ -161,5 +164,6 @@ html
         script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', integrity='sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q', crossorigin='anonymous')
         script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js', integrity='sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl', crossorigin='anonymous')
         script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js')
+        script(type='application/javascript', src='getLatLong.js')
         script(type='application/javascript', src='darkSkyWeather.js')
         script(type='application/javascript', src='maps.js', defer='')

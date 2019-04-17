@@ -118,7 +118,7 @@ html
               .col-sm-6(style='text-align: center;')
                 h4#weather-summary.weather-data
                 h1#weather-temperature.weather-data
-                h3#weather-location.weather-data Austin, TX
+                h4#weather-location.weather-data=`${cityState}`
               .col-sm-6(style='text-align: center;')
                 i#icon-desc.wi
             .row.h-25.weather-info-rows
@@ -168,5 +168,5 @@ html
         script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js')
         script(type='application/javascript', src='getLatLong.js')
         script(type='application/javascript', src='darkSkyWeather.js')
-        script(type='application/javascript', src='maps.js', defer='')
+        script(type='application/javascript', src='maps.js', defer='' )
         

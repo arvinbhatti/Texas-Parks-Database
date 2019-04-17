@@ -357,7 +357,8 @@ app.get('/campgrounds', function(req,res){
           friday: Friday,
           saturday: Saturday,
           sunday: Sunday,
-          totalsites: totalsites
+          totalsites: totalsites,
+          parkCode
         });
         db.close();
       });
