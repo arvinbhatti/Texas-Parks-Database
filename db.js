@@ -4,8 +4,6 @@ var MongoClient = require('mongodb').MongoClient;
 var path = require('path');
 var app = express();
 
-
-
 app.set('views', './public');
 app.set('view engine', 'pug');
 
@@ -576,19 +574,69 @@ app.get('/allVisitorCenters', function(req,res){
 });
 
 
+var request = require('request');
+
+
+app.post('/campupdate', function(req,res){
+
+var endpoint = "https://developer.nps.gov/api/v1/parks?";
+//var apiKey = "nL3ttK1D6ACPakfdXuHtFVwqZoUqBUNakkT4mqZ6";
+var apiKey = "nL3ttK1D6ACPakfdXuHtFVwqZoUqBUNakkT4mqZ6";
+
+var fullUrl = endpoint + "parkCode=&fields=addresses" + "&api_key=" + apiKey;
+
+// parks: fullUrl = "https://developer.nps.gov/api/v1/parks?stateCode=AZ,NM,TX,OK,AR,LA,MS,AL&fields=addresses,contacts,entranceFees,entrancePasses,images,operatingHours&limit=100&api_key=nL3ttK1D6ACPakfdXuHtFVwqZoUqBUNakkT4mqZ6";
+ 
+ fullUrl = "https://developer.nps.gov/api/v1/campgrounds?stateCode=TX&fields=contacts,addresses,fees,operatingHours&api_key=YHWbuaOPiRFh3aG80BSRzcJkLDybMOzGA46AFNvM";
+var data;
+
+request(fullUrl, function (error, response, body) {
+
+      res.send(body);
+      data = JSON.parse(body);
+
+  });
+
+
+});
+
 app.get('/simon', function(req,res){
 
-MongoClient.connect('"mongodb+srv://cluster0-yvnv5.mongodb.net/plswork" --username accessUser22 --password password123456', function (err, database) {
-   if (err)
-    throw err
-   else
-   {
-  db = database;
-  console.log('Connected to MongoDB');
-  //Start app only after connection is ready
-  app.listen(3000);
-   }
- });
+MongoClient.connect(uri,{ useNewUrlParser: true },  function(err, db) {
+
+            var database = db.db("coral");
+
+              var myobj = { name: "Park", address: "Zilker" };
+
+
+          app.route('/user').get
+
+
+                // database.collection('SimonTest').insert(data, function(err, res) {
+                // if (err) throw err;
+                // console.log("1 document inserted");
+
+                //  });
+
+              database.collection('SimonTest').insertOne(myobj, function(err, res) {
+                if (err) throw err;
+                console.log("1 document inserted");
+
+                 });
+
+            var cursor = database.collection('SimonTest').find({}).toArray(function(err,result){
+              if (err) throw err;
+             // console.log(result);
+             // res.send(result);
+
+
+              });
+
+
+           
+
+      db.close();
+  });
 
 });
 
