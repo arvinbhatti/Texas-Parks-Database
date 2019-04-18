@@ -41,13 +41,13 @@ var allParks=[];
 app.route('/json').get(function(req, res)
 
     {
-     
+
         MongoClient.connect(uri,{ useNewUrlParser: true },  function(err, db) {
 
             var database = db.db("coral");
             var cursor = database.collection('newParks').find();
 
-          
+
             //noinspection JSDeprecatedSymbols
             cursor.limit(5).each(function(err, item) {
 
@@ -65,38 +65,38 @@ app.route('/json').get(function(req, res)
                     object.push(item.latLong);
                     object.push(item.parkCode);
                     */
-                    
+
                     parks.push(object);
                     //sconsole.log(parks);
                 }
             });
-            
+
             cursor = database.collection('newCampgrounds').find();
             cursor.limit(5).each(function(err, item){
               if(item!=null){
                 //console.log(item);
                 //console.log(item.name);
                 var object = {
-                "name" : item.name, 
+                "name" : item.name,
                 "address" : item.addresses
                 };
 
                 campgrounds.push(object);
               }
-              
+
             });
-            
+
 
             cursor = database.collection('newVisitorCenters').find();
             cursor.limit(5).each(function(err, item){
               if(item!=null){
                 var object = {
-                "name" : item.name, 
+                "name" : item.name,
                 "address" : item.addresses
                 };
                 visitorCenters.push(object);
               }
-              
+
             });
             var collections =[];
             collections.push(parks);
@@ -161,7 +161,7 @@ app.get('/parks',function(req,res){
           if(addresses[x].type =="Physical"){
 
             address=addresses[x].line1;
-            
+
            var cityState="";
             cityState+=addresses[x].city;
             cityState+=", "
@@ -213,9 +213,9 @@ app.get('/parks',function(req,res){
       //console.log(images);
         /* Left off here, need to finish getting all info for template */
        // console.log(address);
-        res.render('park', { title: fullName, 
-          description: description, 
-          phoneNumber: phone, 
+        res.render('park', { title: fullName,
+          description: description,
+          phoneNumber: phone,
           email: email,
           address: address,
           cityState: cityState,
@@ -228,10 +228,10 @@ app.get('/parks',function(req,res){
         });
         db.close();
       });
-            
-      
+
+
   });
-   
+
   // res.sendFile(__dirname+'/public/park.html');
  // res.render('park', { title: 'Hey'});
   //res.send("Park!");
@@ -252,18 +252,18 @@ app.get('/campgrounds', function(req,res){
         var description = result[0].description;
         var phone="unavailable";
        // console.log(result[0].contacts.phoneNumbers);
-        
+
         if(result[0].contacts.phoneNumbers[0] != undefined ){
          // console.log("yay");
           phone = result[0].contacts.phoneNumbers[0].phoneNumber;
         }
-        
+
         var email="unavailable";
-        
+
         if(result[0].contacts.emailAddresses[0] != undefined ){
           email = result[0].contacts.emailAddresses[0].emailAddress;
         }
-        
+
 
         var addresses = result[0].addresses;
         var address = "unavailable";
@@ -273,7 +273,7 @@ app.get('/campgrounds', function(req,res){
           if(addresses[x].type =="Physical"){
 
             address=addresses[x].line1;
-            
+
            var cityState="";
             cityState+=addresses[x].city;
             cityState+=", "
@@ -326,7 +326,7 @@ app.get('/campgrounds', function(req,res){
 
        var lat="";
        var lon="";
-       
+
        var q = { parkCode: parkCode};
       var cursor2 = database.collection('newParks').find(q).toArray(function(err, result2){
         latLong=result2[0].latLong;
@@ -334,7 +334,7 @@ app.get('/campgrounds', function(req,res){
       });
      // console.log(latLong);
        if(latLong!=""){
-          
+
           var properties = latLong.split(', ');
           var obj = {};
           properties.forEach(function(property) {
@@ -344,8 +344,8 @@ app.get('/campgrounds', function(req,res){
           lat=obj.lat;
           lon=obj.long;
        }
-       
-       
+
+
        /*
        var images=[];
       if(result[0].images.length > 0 || result[0].images != undefined){
@@ -355,9 +355,9 @@ app.get('/campgrounds', function(req,res){
       //console.log(images);
         /* Left off here, need to finish getting all info for template */
        // console.log(address);
-        res.render('campground', { title: fullName, 
-          description: description, 
-          phoneNumber: phone, 
+        res.render('campground', { title: fullName,
+          description: description,
+          phoneNumber: phone,
           email: email,
           address: address,
           cityState: cityState,
@@ -377,8 +377,8 @@ app.get('/campgrounds', function(req,res){
         });
         db.close();
       });
-            
-      
+
+
   });
   //res.sendFile(__dirname + '/public/campsite.html');
   //res.send("Campground!");
@@ -402,7 +402,7 @@ app.get('/visitorCenters', function(req,res){
           if(result[0].contacts.phoneNumbers[0] != undefined){
             phone = result[0].contacts.phoneNumbers[0].phoneNumber;
           }
-          
+
         }
         var email="";
         if(result[0].contacts.emailAddresses !=undefined){
@@ -410,7 +410,7 @@ app.get('/visitorCenters', function(req,res){
           email = result[0].contacts.emailAddresses[0].emailAddress;
         }
         }
-        
+
         var addresses = result[0].addresses;
         var address = "unavailable";
         if(result[0].addresses != undefined){
@@ -419,7 +419,7 @@ app.get('/visitorCenters', function(req,res){
           if(addresses[x].type =="Physical"){
 
             address=addresses[x].line1;
-            
+
            var cityState="";
             cityState+=addresses[x].city;
             cityState+=", "
@@ -460,7 +460,7 @@ app.get('/visitorCenters', function(req,res){
 
         }
        }
-       
+
        var parkCode=result[0].parkCode;
       // console.log(parkCode);
        var latLong="";
@@ -493,9 +493,9 @@ app.get('/visitorCenters', function(req,res){
       //console.log(images);
         /* Left off here, need to finish getting all info for template */
        // console.log(address);
-        res.render('visitorCenter', { title: fullName, 
-          description: description, 
-          phoneNumber: phone, 
+        res.render('visitorCenter', { title: fullName,
+          description: description,
+          phoneNumber: phone,
           email: email,
           address: address,
           cityState: cityState,
@@ -514,8 +514,8 @@ app.get('/visitorCenters', function(req,res){
         });
         db.close();
       });
-            
-      
+
+
   });
   // res.sendFile(__dirname + '/public/visitorCenter.html');
   //res.send("Visitor Center!");
@@ -531,9 +531,9 @@ app.get('/allParks', function(req,res){
               if (err) throw err;
               //console.log(result);
               res.send(result);
-              
+
             });
-           
+
       db.close();
   });
 
@@ -549,12 +549,12 @@ app.get('/allCampgrounds', function(req,res){
               if (err) throw err;
              // console.log(result);
               res.send(result);
-              
+
             });
-           
+
       db.close();
   });
-  
+
   //res.send('AllCampgrounds');
 });
 
@@ -566,12 +566,12 @@ app.get('/allVisitorCenters', function(req,res){
               if (err) throw err;
              // console.log(result);
               res.send(result);
-              
+
             });
-           
+
       db.close();
   });
-  
+
   //res.send('AllVisitorCenters');
 });
 
@@ -579,7 +579,7 @@ app.get('/allVisitorCenters', function(req,res){
 app.get('/simon', function(req,res){
 
 MongoClient.connect('"mongodb+srv://cluster0-yvnv5.mongodb.net/plswork" --username accessUser22 --password password123456', function (err, database) {
-   if (err) 
+   if (err)
     throw err
    else
    {
@@ -600,15 +600,15 @@ app.get('/getLatLong', function(req,res){
     var parkCode = req.query.parkCode;
     //console.log(parkCode);
    MongoClient.connect(uri,{ useNewUrlParser: true },  function(err, db) {
-           
+
             var database = db.db("coral");
             var cursor = database.collection('newParks').find({parkCode: parkCode}).toArray(function(err,result){
               if (err) throw err;
               //console.log(result[0]);
               res.send(result);
-              
+
             });
-           
+
       db.close();
   });
 });
@@ -635,26 +635,28 @@ app.post('/findZip', function(req,res){
     var zipUrl = zipEndpoint + zipKey + "info." + zipType + "/" + zip + "/" + zipUnits;
 
     console.log("Zip URL:" + zipUrl);
-    
+
 
     request(zipUrl, function (error, response, body) {
           console.log('error:', error); // Print the error if one occurred and handle it
           console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
           res.send(body);
 
-console.log(body);
+          console.log(body);
+          var data = JSON.parse(body);
+          console.log("Data: " + data);
 
-          zipLat = body.lat;
-          zipLong = body.long;
+          zipLat = data.lat;
+          zipLong = data.lng;
 
-                    console.log("LATTTTT:    " + zipLat);
-                    console.log("LONGGGG:    " + zipLong);
+          console.log("LATTTTT:    " + zipLat);
+          console.log("LONGGGG:    " + zipLong);
     });
 
   console.log(req.body);
 });
 
-//var server = app.listen(8080, function() {}); 
+//var server = app.listen(8080, function() {});
 
 
 
@@ -675,12 +677,12 @@ console.log(body);
 
 
   // collection.find({}, { name: 1}).toArray(function(err, result) {
-  //   if (err) 
+  //   if (err)
   //     throw err;
 
    // console.log("Connected");
-    
-    
+
+
   //   var length = result.length;
 
   //   var i;
@@ -701,11 +703,11 @@ console.log(body);
 
 
 
-      
+
   //   }
-    
-    
-    
+
+
+
   //   db.close();
   // });
 // });
