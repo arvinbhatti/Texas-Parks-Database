@@ -575,6 +575,26 @@ app.get('/allVisitorCenters', function(req,res){
   //res.send('AllVisitorCenters');
 });
 
+
+app.get('/simon', function(req,res){
+
+MongoClient.connect('"mongodb+srv://cluster0-yvnv5.mongodb.net/plswork" --username accessUser22 --password password123456', function (err, database) {
+   if (err) 
+    throw err
+   else
+   {
+  db = database;
+  console.log('Connected to MongoDB');
+  //Start app only after connection is ready
+  app.listen(3000);
+   }
+ });
+
+});
+
+
+
+
 app.get('/getLatLong', function(req,res){
   //console.log(req.query);
     var parkCode = req.query.parkCode;
@@ -593,8 +613,44 @@ app.get('/getLatLong', function(req,res){
   });
 });
 
+
+
+
+var request = require('request');
+
 app.post('/findZip', function(req,res){
-  res.send('You sent the zipcode "' + req.body.zipInput + '".');
+  //res.send('You sent the zipcode "' + req.body.zipInput + '".');
+
+
+    var zip = req.body.zipInput;
+    console.log("Zip:" + zip);
+
+    var zipKey = "4Enuwr1rKc4dzu85H65Ic92HHQe258pzqqSh38Se5dEwR8l52vqnSqB7TmzQctt4/";
+        var zipEndpoint = "https://www.zipcodeapi.com/rest/";
+        var zipType = "json";
+        var zipUnits = "degrees";
+        var zipLat = 30.230455;
+        var zipLong = 97.713943;
+
+    var zipUrl = zipEndpoint + zipKey + "info." + zipType + "/" + zip + "/" + zipUnits;
+
+    console.log("Zip URL:" + zipUrl);
+    
+
+    request(zipUrl, function (error, response, body) {
+          console.log('error:', error); // Print the error if one occurred and handle it
+          console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+          res.send(body);
+
+console.log(body);
+
+          zipLat = body.lat;
+          zipLong = body.long;
+
+                    console.log("LATTTTT:    " + zipLat);
+                    console.log("LONGGGG:    " + zipLong);
+    });
+
   console.log(req.body);
 });
 

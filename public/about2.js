@@ -130,6 +130,50 @@ function userInfo(team, member, userName) {
 	xmlhttp.send();
 }
 
+
+
+
+
+
+
+
+
+
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			var i = xmlhttp.getResponseHeader();
+			console.log(i);
+			var data = (JSON.parse(xmlhttp.responseText));
+			//var name = team.usrToName(userName);
+			//console.log(data);
+			var count=0;
+			for(var i=0; i<data.length; i++){
+				//console.log(data[i].commit.author.name);
+				//console.log(data[i].total);
+				count++;
+			}
+			//console.log(count);
+		}
+	};
+	xmlhttp.open("GET", "https://api.github.com/repos/simonkliewer/ee461l_coral/commits?page=2");
+	xmlhttp.send();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function getCommits(team, member, userName) {
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
@@ -170,6 +214,7 @@ function getIssues(team, member, userName) {
         xmlhttp.open("GET", "https://api.github.com/repos/simonkliewer/ee461l_coral/issues");
         xmlhttp.send();	
 }
+
 
 function commitsTotal(team) {
 	console.log("calculating total # commits...");
