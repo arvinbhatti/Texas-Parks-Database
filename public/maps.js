@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //script.async = true;
     //script.defer = true;
     document.getElementsByTagName("head")[0].appendChild(script);
- }, 3000);
+ }, 1500);
    
 });
 

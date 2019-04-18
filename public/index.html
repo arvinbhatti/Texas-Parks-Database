@@ -71,13 +71,14 @@
           <h1 id="intromessage" class="mb-5">Welcome to Texas Parks Database! Your one stop for all your adventure needs.</h1>
         </div>
         <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-          <form>
+          <form action="/findZip" method="post">
             <div class="form-row">
               <div class="col-12 col-md-9 mb-2 mb-md-0">
-                <input id="zipInput" type="text" class="form-control form-control-lg" placeholder="Enter your zipcode...">
+                <input id="zipInput" type="text" class="form-control form-control-lg" name='zipInput'placeholder="Enter your zipcode...">
               </div>
               <div class="col-12 col-md-3">
-                <button type="button" class="btn btn-block btn-lg btn-primary" onclick="myFunction();">Find Parks!</button>
+                <button type="submit" class="btn btn-block btn-lg btn-primary" >Find Parks!</button>
+             
               </div>
             </div>
           </form>
@@ -107,16 +108,16 @@
               <i class="icon-compass m-auto text-primary"></i>
             </div>
             <h3>Get Directions</h3>
-            <p class="lead mb-0">Google Maps and Weather API's implemented makes getting directions easy and simple</p>
+            <p class="lead mb-0">All of our pages are integrated with Google Maps!</p>
           </div>
         </div>
         <div class="col-lg-4">
           <div class="features-icons-item mx-auto mb-0 mb-lg-3">
             <div class="features-icons-icon d-flex">
-              <i class="icon-calendar m-auto text-primary"></i>
+              <i class="icon-umbrella m-auto text-primary"></i>
             </div>
-            <h3>Camping Reservations</h3>
-            <p class="lead mb-0">With our national parks service integration, we make reserving campsites fast and easy!</p>
+            <h3>Check the Weather</h3>
+            <p class="lead mb-0">You can even check the weather for your destination!</p>
           </div>
         </div>
       </div>
@@ -391,7 +392,7 @@ $(document).ready(function(){
         <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('img/bg-showcase-1.jpg');"></div>
         <div class="col-lg-6 order-lg-1 my-auto showcase-text">
           <h2>Technologies</h2>
-          <p class="lead mb-0">We will use the Google Geocoding and Maps API to plot the parks location on a map. We will also use this API to find the location of the parks in order to get the weather information from the Dark Sky API and OpenWeatherMap. </p>
+          <p class="lead mb-0">We will use the Google Geocoding and Maps API to plot the parks location on a map. We will also use this API to find the location of the parks in order to get the weather information from the Dark Sky API. </p>
         </div>
       </div>
     </div>
@@ -428,6 +429,7 @@ $(document).ready(function(){
   </section> -->
 
   <!-- Call to Action -->
+  <!--
   <section class="call-to-action text-white text-center">
     <div class="overlay"></div>
     <div class="container">
@@ -450,6 +452,7 @@ $(document).ready(function(){
       </div>
     </div>
   </section>
+-->
 
   <!-- Footer -->
   <footer class="footer bg-light">
@@ -458,8 +461,9 @@ $(document).ready(function(){
         <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
           <ul class="list-inline mb-2">
             <li class="list-inline-item">
-              <a href="#">About</a>
+              <a href="about.html">About</a>
             </li>
+            <!--
             <li class="list-inline-item">&sdot;</li>
             <li class="list-inline-item">
               <a href="#">Contact</a>
@@ -472,9 +476,11 @@ $(document).ready(function(){
             <li class="list-inline-item">
               <a href="#">Privacy Policy</a>
             </li>
+          -->
           </ul>
-          <p class="text-muted small mb-4 mb-lg-0">&copy; Your Website 2019. All Rights Reserved.</p>
+          <p class="text-muted small mb-4 mb-lg-0">&copy; Texas Parks Database. All Rights Reserved.</p>
         </div>
+        <!--
         <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
           <ul class="list-inline mb-0">
             <li class="list-inline-item mr-3">
@@ -494,6 +500,7 @@ $(document).ready(function(){
             </li>
           </ul>
         </div>
+      -->
       </div>
     </div>
 

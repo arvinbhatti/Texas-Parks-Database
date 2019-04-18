@@ -26,7 +26,7 @@ window.onload = function() {
   lat = parseFloat(document.getElementById('Latitude').innerHTML);
   long = parseFloat(document.getElementById('Longitude').innerHTML);
   showWeather(lat, long);
- }, 3000);
+ }, 1500);
   
 }
 

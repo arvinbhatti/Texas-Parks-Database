@@ -1,6 +1,6 @@
 
 var parkCode = document.getElementById('parkCode').innerHTML;
-console.log(parkCode);
+//console.log(parkCode);
 
 let url=`/getLatLong?parkCode=${parkCode}`;
         fetch(url).then(response => response.json())

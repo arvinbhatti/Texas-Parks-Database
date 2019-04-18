@@ -1,16 +1,31 @@
 var express = require('express');
-
+const bodyParser = require('body-parser');
+var MongoClient = require('mongodb').MongoClient;
+var path = require('path');
 var app = express();
 
-var path = require('path');
+
 
 app.set('views', './public');
 app.set('view engine', 'pug');
 
+
 app.use(express.static(path.join(__dirname, 'public')));
-var MongoClient = require('mongodb').MongoClient;
+app.use(express.urlencoded());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
+
 var names;
 
+
+
+const server = app.listen(8080, () => {
+  const host = server.address().address;
+  const port = server.address().port;
+
+  console.log(`Example app listening at http://${host}:${port}`);
+});
 //var url = "mongodb://coral_username:coral_password@cluster0-4dk4s.mongodb.net/test";
 // var url = "mongodb://localhost:27017/";
 const uri = "mongodb+srv://coral_username:coral_password@cluster0-yvnv5.mongodb.net/test?retryWrites=true";
@@ -125,7 +140,7 @@ app.get('/test',(req,res)=>{
 app.get('/parks',function(req,res){
   /* Need to complete park template*/
   var name = req.query.name;
-   console.log(name);
+ //  console.log(name);
    MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
 
       var database = db.db("coral");
@@ -142,7 +157,7 @@ app.get('/parks',function(req,res){
         var addresses = result[0].addresses;
         var address = "";
         for(var x in addresses){
-          console.log(addresses[x].type);
+        //  console.log(addresses[x].type);
           if(addresses[x].type =="Physical"){
 
             address=addresses[x].line1;
@@ -225,7 +240,7 @@ app.get('/parks',function(req,res){
 app.get('/campgrounds', function(req,res){
   /*Need to complete campground template*/
    var name = req.query.name;
-   console.log(name);
+  // console.log(name);
    MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
 
       var database = db.db("coral");
@@ -239,7 +254,7 @@ app.get('/campgrounds', function(req,res){
        // console.log(result[0].contacts.phoneNumbers);
         
         if(result[0].contacts.phoneNumbers[0] != undefined ){
-          console.log("yay");
+         // console.log("yay");
           phone = result[0].contacts.phoneNumbers[0].phoneNumber;
         }
         
@@ -254,7 +269,7 @@ app.get('/campgrounds', function(req,res){
         var address = "unavailable";
         if(result[0].addresses != undefined){
         for(var x in addresses){
-          console.log(addresses[x].type);
+         // console.log(addresses[x].type);
           if(addresses[x].type =="Physical"){
 
             address=addresses[x].line1;
@@ -317,7 +332,7 @@ app.get('/campgrounds', function(req,res){
         latLong=result2[0].latLong;
         //console.log(latLong);
       });
-      console.log(latLong);
+     // console.log(latLong);
        if(latLong!=""){
           
           var properties = latLong.split(', ');
@@ -372,7 +387,7 @@ app.get('/campgrounds', function(req,res){
 app.get('/visitorCenters', function(req,res){
   /*Need to complete Visitor Center template*/
  var name = req.query.name;
-   console.log(name);
+  // console.log(name);
    MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
 
       var database = db.db("coral");
@@ -400,7 +415,7 @@ app.get('/visitorCenters', function(req,res){
         var address = "unavailable";
         if(result[0].addresses != undefined){
         for(var x in addresses){
-          console.log(addresses[x].type);
+         // console.log(addresses[x].type);
           if(addresses[x].type =="Physical"){
 
             address=addresses[x].line1;
@@ -514,7 +529,7 @@ app.get('/allParks', function(req,res){
             var database = db.db("coral");
             var cursor = database.collection('newParks').find({}).toArray(function(err,result){
               if (err) throw err;
-              console.log(result);
+              //console.log(result);
               res.send(result);
               
             });
@@ -532,7 +547,7 @@ app.get('/allCampgrounds', function(req,res){
             var database = db.db("coral");
             var cursor = database.collection('newCampgrounds').find({}).toArray(function(err,result){
               if (err) throw err;
-              console.log(result);
+             // console.log(result);
               res.send(result);
               
             });
@@ -549,7 +564,7 @@ app.get('/allVisitorCenters', function(req,res){
             var database = db.db("coral");
             var cursor = database.collection('newVisitorCenters').find({}).toArray(function(err,result){
               if (err) throw err;
-              console.log(result);
+             // console.log(result);
               res.send(result);
               
             });
@@ -561,7 +576,7 @@ app.get('/allVisitorCenters', function(req,res){
 });
 
 app.get('/getLatLong', function(req,res){
-  console.log(req.query);
+  //console.log(req.query);
     var parkCode = req.query.parkCode;
     //console.log(parkCode);
    MongoClient.connect(uri,{ useNewUrlParser: true },  function(err, db) {
@@ -576,15 +591,15 @@ app.get('/getLatLong', function(req,res){
            
       db.close();
   });
-})
+});
+
+app.post('/findZip', function(req,res){
+  res.send('You sent the zipcode "' + req.body.zipInput + '".');
+  console.log(req.body);
+});
 
 //var server = app.listen(8080, function() {}); 
-const server = app.listen(8080, () => {
-  const host = server.address().address;
-  const port = server.address().port;
 
-  console.log(`Example app listening at http://${host}:${port}`);
-});
 
 
 
@@ -607,7 +622,7 @@ const server = app.listen(8080, () => {
   //   if (err) 
   //     throw err;
 
-    console.log("Connected");
+   // console.log("Connected");
     
     
   //   var length = result.length;
