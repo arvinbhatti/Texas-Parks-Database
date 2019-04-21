@@ -707,6 +707,23 @@ app.post('/findZip', function(req,res){
 //var server = app.listen(8080, function() {});
 
 
+app.get('/getImages', function(req,res){
+  var parkCode = req.query.parkCode;
+    //console.log(parkCode);
+   MongoClient.connect(uri,{ useNewUrlParser: true },  function(err, db) {
+
+            var database = db.db("coral");
+            var cursor = database.collection('newParks').find({parkCode: parkCode}).toArray(function(err,result){
+              if (err) throw err;
+              //console.log(result[0]);
+              res.send(result);
+
+            });
+
+      db.close();
+  });
+})
+
 
 
 

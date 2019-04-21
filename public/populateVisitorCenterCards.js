@@ -10,34 +10,52 @@ let url="/allVisitorCenters";
 
 		    let cardBody = document.createElement('div');
 		    cardBody.className = 'card-body';
+		    
+		    var parkCode = result[i].parkCode;
+		    let url3=`/getImages?parkCode=${parkCode}`;
+		    fetch(url3).then(response => response.json())
+		    .then( (result) => {
+		    	//console.log('sucess:', result[0].images[0]);
+		    	let image = document.createElement('img');
+			    
+			    if(result[0].images != undefined){
+			    	if(result[0].images[0] != undefined){
+			    	image.src = result[0].images[0].url;
+			    	}else{
+			    	image.src="https://twu.edu/media/images/communication-sciences/Photo-Unavailbale-300-Square.jpg";
+			    	}
+			    }else{
+			    	image.src="https://twu.edu/media/images/communication-sciences/Photo-Unavailbale-300-Square.jpg";
+			    }
+			    
+			    image.className = 'card-img-top';
+			    cardBody.insertBefore(image, cardBody.children[0]);
 
-		    let image = document.createElement('img');
-		    if(result[i].images != undefined){
-		    	if(result[i].images[i] != undefined){
-		    	image.src = result[i].images[0].url;
-		    	}else{
-		    	image.src="https://twu.edu/media/images/communication-sciences/Photo-Unavailbale-300-Square.jpg";
-		    	}
-		    }else{
-		    	image.src="https://twu.edu/media/images/communication-sciences/Photo-Unavailbale-300-Square.jpg";
-		    }
-		    
-		    
-		    image.className = 'card-img-top';
+			    let park = document.createElement('h6');
+			    park.className = 'card-subtitle';
+			    park.innerHTML= 'Park: ' + result[0].fullName;
+			    cardBody.insertBefore(park, cardBody.children[2]);
+
+		    }).catch(error => console.log('error:', error));
+
 
 		   let body = document.createElement('div');
 		    
+		    
 		    body.className = 'card-body';
 		    let cardText = document.createElement('h5');
-		    cardText.className = 'card-text';
+		    cardText.className = 'card-title';
 		    cardText.innerHTML = `<a href='/visitorCenters?name=${result[i].name}'> ${result[i].name}</a>`;
+		    cardText.style.color = 'black';
 		    body.appendChild(cardText);
 
 
-		    cardBody.appendChild(image);
-		    cardBody.appendChild(body);
+		    
+		    cardBody.appendChild(body)
 		    card.appendChild(cardBody);
 		    cardContainer.appendChild(card);
+		    
+		    
             }
              
           

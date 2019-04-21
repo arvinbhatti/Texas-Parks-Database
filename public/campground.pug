@@ -27,7 +27,7 @@ html
       h1#Name.my-4=title
       .row
         #image.col-md-6
-          img.img-fluid(src='https://www.outdoorproject.com/sites/default/files/styles/cboxshow/public/1462644676/dsc_6197.jpg?itok=xzg0BPfW', alt='')
+          img#pic.img-fluid(src='', alt=`${title}`)
         .col-md-6
           h4.my-3 Description
           p#description=description
@@ -58,7 +58,7 @@ html
             p#campnum(style='padding-left: 20px;')
               b Campsites: 
               span=totalsites
-              p(style='padding-left: 20px;')
+            p(style='padding-left: 20px;')
               b Park Code: 
               span#parkCode=parkCode
         .col-md-6
@@ -160,6 +160,7 @@ html
               img.img-fluid(src='http://placehold.it/500x300', alt='')
         // /.row
         // /.container
+        script(type='application/javascript', src='populateImages.js')
         script(src='https://code.jquery.com/jquery-3.2.1.slim.min.js', integrity='sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN', crossorigin='anonymous')
         script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', integrity='sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q', crossorigin='anonymous')
         script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js', integrity='sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl', crossorigin='anonymous')
@@ -167,3 +168,4 @@ html
         script(type='application/javascript', src='getLatLong.js')
         script(type='application/javascript', src='darkSkyWeather.js')
         script(type='application/javascript', src='maps.js', defer='')
+        
