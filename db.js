@@ -21,6 +21,7 @@ var names;
 const server = app.listen(8080, () => {
   const host = server.address().address;
   const port = server.address().port;
+  mapInit();
 
   console.log(`Example app listening at http://${host}:${port}`);
 });
@@ -35,6 +36,20 @@ var campgrounds=[];
 var visitorCenters=[];
 var allParks=[];
 
+var latLongMap = new Map();
+
+var mapInit = function() {
+  MongoClient.connect(uri,{useNewUrlParser:true}, function(err, db){
+    var database = db.db('coral');
+    var cursor = database.collection('newParks').find();
+    cursor.forEach(function(doc){
+        var parkCode = doc.parkCode;
+        var obj = doc.latLong;
+        var latLong = parseLoc(obj);
+        latLongMap.set(parkCode, latLong);
+    });
+  });
+}
 
 app.route('/json').get(function(req, res)
 
@@ -586,7 +601,7 @@ var apiKey = "nL3ttK1D6ACPakfdXuHtFVwqZoUqBUNakkT4mqZ6";
 var fullUrl = endpoint + "parkCode=&fields=addresses" + "&api_key=" + apiKey;
 
 // parks: fullUrl = "https://developer.nps.gov/api/v1/parks?stateCode=AZ,NM,TX,OK,AR,LA,MS,AL&fields=addresses,contacts,entranceFees,entrancePasses,images,operatingHours&limit=100&api_key=nL3ttK1D6ACPakfdXuHtFVwqZoUqBUNakkT4mqZ6";
- 
+
  fullUrl = "https://developer.nps.gov/api/v1/campgrounds?stateCode=TX&fields=contacts,addresses,fees,operatingHours&api_key=YHWbuaOPiRFh3aG80BSRzcJkLDybMOzGA46AFNvM";
 var data;
 
@@ -633,7 +648,7 @@ MongoClient.connect(uri,{ useNewUrlParser: true },  function(err, db) {
               });
 
 
-           
+
 
       db.close();
   });
@@ -723,6 +738,261 @@ app.get('/getImages', function(req,res){
       db.close();
   });
 })
+
+const Math = require('mathjs')
+var request = require('request');
+
+//var constructSinglePark = function();
+
+var dist = function(lat1, lon1, lat2, lon2) {
+  var conv = 6371; // km
+  var res;
+
+  var dLat = (lat2-lat1) * Math.PI / 180;
+  var dLon = (lon2-lon1) * Math.PI / 180;
+  var lat1 = (lat1) * Math.PI / 180;
+  var lat2 = (lat2) * Math.PI / 180;
+
+  var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+  Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  res = conv * c;
+  return res;
+}
+
+var parseLoc = function(latLong) {
+  var properties = latLong.split(', ');
+  var obj = {};
+  properties.forEach(function(property) {
+     var i = property.split(':');
+     obj[i[0]] = i[1];
+  });
+  return obj;
+}
+
+var doParks = function(latLong, res) {
+  var list = [];
+  var sema = 0;
+  var zipLat = latLong.lat;
+  var zipLong = latLong.long;
+  MongoClient.connect(uri, {useNewUrlParser: true}, function(err, db){
+    var database = db.db('coral');
+    var cursor = database.collection('newParks').find();
+    cursor.forEach(function(doc){
+      list.push(doc);
+      var ctr = 1000;
+      while(ctr){
+        ctr--;
+      }
+      database.collection('newParks').countDocuments(function(err, count){
+          if(count == list.length) {
+              list.sort(function(a, b){
+                  var aLatLong = a.latLong;
+                  //console.log("aLatLong: " + a.latLong);
+                  var bLatLong = b.latLong;
+
+                  if(aLatLong == "" && bLatLong == "") return 0;
+                  if(aLatLong == "") return 1;
+                  if(bLatLong == "") return -1;
+
+                  var aObj = parseLoc(aLatLong);
+                  var bObj = parseLoc(bLatLong);
+
+                  var aLat=aObj.lat;
+                  var aLon=aObj.long;
+
+                  var bLat = bObj.lat;
+                  var bLon = bObj.long;
+
+                  var distA = dist(zipLat, zipLong, aLat, aLon);
+                  //console.log(a.name + ": " + distA);
+                  var distB = dist(zipLat, zipLong, bLat, bLon);
+                  //console.log(b.name + ": " + distB);
+                  if(distA < distB) return -1;
+                  if(distA > distB) return 1;
+                  return 0;
+              });
+              if (!sema) {
+                res.send(JSON.stringify(list));
+                db.close();
+                sema++;
+              }
+          }
+      });
+    });
+  });
+
+}
+
+var listReady = function(list, count) {
+  if(list.length != count) return false;
+  for(var i = 0; i < list.length; i++) {
+    if(!list[i].parkCode) return false;
+  }
+  return true;
+}
+
+var doCampgrounds = function(latLong, res) {
+  var sema = 0;
+  var list = [];
+  var zipLat = latLong.lat;
+  var zipLong = latLong.long;
+  MongoClient.connect(uri, {useNewUrlParser: true}, function(err, db){
+    var database = db.db('coral');
+    var cursor = database.collection('newCampgrounds').find();
+    cursor.forEach(function(doc){
+        list.push(doc);
+        var ctr = 1000;
+        while(ctr){
+          ctr--;
+        }
+        database.collection('newCampgrounds').countDocuments(function(err, count){
+          if(err) throw err;
+          if(listReady(list, count)) {
+            list.sort(function(a,b){
+              //console.log(a.name + " park code: " + a.parkCode);
+              //console.log(b.name + " park code: " + b.parkCode);
+              var aLatLong = latLongMap.get(a.parkCode);
+              var bLatLong = latLongMap.get(b.parkCode);
+
+              if(aLatLong == null && bLatLong == null){
+                return 0;
+              }
+              if(aLatLong == null){
+                return 1;
+              }
+              if(bLatLong == null){
+                return -1;
+              }
+
+              var aLat = aLatLong.lat;
+              //console.log("aLat: " + aLat);
+              var aLong = aLatLong.long;
+              var bLat = bLatLong.lat;
+              //console.log("bLat: " + bLat);
+              var bLong = bLatLong.long;
+
+              var aDist = dist(zipLat, zipLong, aLat, aLong);
+              console.log(a.name + ": " + aDist);
+              var bDist = dist(zipLat, zipLong, bLat, bLong);
+              console.log(b.name + ": " + bDist);
+
+              if(aDist < bDist) return -1;
+              if(aDist > bDist) return 1;
+              return 0;
+            });
+            if(!sema){
+              res.send(JSON.stringify(list));
+              sema++;
+              return;
+            }
+          }
+        });
+    });
+  });
+}
+
+var doVisitorCenters = function(latLong, res){
+  var sema = 0;
+  var list = [];
+  var zipLat = latLong.lat;
+  var zipLong = latLong.long;
+  MongoClient.connect(uri, {useNewUrlParser: true}, function(err, db){
+    var database = db.db('coral');
+    var cursor = database.collection('newVisitorCenters').find();
+    cursor.forEach(function(doc){
+        list.push(doc);
+        //console.log(list);
+        var ctr = 1000;
+        while(ctr){
+          ctr--;
+        }
+        database.collection('newVisitorCenters').countDocuments(function(err, count){
+          if(err) throw err;
+          //console.log(list);
+          if(listReady(list, count)) {
+            if(sema) return;
+            //console.log("sorting");
+            list.sort(function(a,b){
+              //console.log(a.name + " park code: " + a.parkCode);
+              //console.log(b.name + " park code: " + b.parkCode);
+              var aLatLong = latLongMap.get(a.parkCode);
+              var bLatLong = latLongMap.get(b.parkCode);
+
+              if(aLatLong == null && bLatLong == null){
+                return 0;
+              }
+              if(aLatLong == null){
+                return 1;
+              }
+              if(bLatLong == null){
+                return -1;
+              }
+
+              var aLat = aLatLong.lat;
+              //console.log("aLat: " + aLat);
+              var aLong = aLatLong.long;
+              var bLat = bLatLong.lat;
+              //console.log("bLat: " + bLat);
+              var bLong = bLatLong.long;
+
+              var aDist = dist(zipLat, zipLong, aLat, aLong);
+              //console.log(a.name + ": " + aDist);
+              var bDist = dist(zipLat, zipLong, bLat, bLong);
+              //console.log(b.name + ": " + bDist);
+
+              if(aDist < bDist) return -1;
+              if(aDist > bDist) return 1;
+              return 0;
+            });
+            if(!sema){
+              //console.log(list);
+              res.send(JSON.stringify(list));
+              sema++;
+              return;
+            }
+          }
+        });
+    });
+  });
+}
+
+app.post('/search', function(req, res){
+  var zip = req.body.zipInput;
+  var model = req.body.model;
+  console.log("model: "+model);
+  var zipKey = "4Enuwr1rKc4dzu85H65Ic92HHQe258pzqqSh38Se5dEwR8l52vqnSqB7TmzQctt4/";
+  var zipEndpoint = "https://www.zipcodeapi.com/rest/";
+  var zipType = "json";
+  var zipUnits = "degrees";
+  var zipLat;
+  var zipLong;
+
+  var zipUrl = zipEndpoint + zipKey + "info." + zipType + "/" + zip + "/" + zipUnits;
+
+  var sema = 0;
+
+  /* TODO handle bad zip input */
+  request(zipUrl, function (error, response, body) {
+        //console.log('error:', error); // Print the error if one occurred and handle it
+        //console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+        if (response.statusCode != 200) {
+          console.log("zip api request failed");
+          return;
+        }
+        //res.send(body);
+
+        //console.log(body);
+        var data = JSON.parse(body);
+        var obj = {lat:data.lat, long:data.lng};
+
+        if(model == "parks") doParks(obj, res);
+        else if(model == "campgrounds") doCampgrounds(obj, res);
+        else if(model == "visitorCenters") doVisitorCenters(obj, res);
+        else res.send("Error... model not matching");
+  });
+});
+
 
 
 
