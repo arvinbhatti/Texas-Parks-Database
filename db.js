@@ -854,6 +854,11 @@ var doParks = function(latLong, res, zip) {
       }
       database.collection('newParks').countDocuments(function(err, count){
           if(count == list.length) {
+              for(var i = 0; i < list.length; i++) {
+                if(list[i].latLong == "") {
+                  list.splice(i, 1);
+                }
+              }
               list.sort(function(a, b){
                   var aLatLong = a.latLong;
                   //console.log("aLatLong: " + a.latLong);
