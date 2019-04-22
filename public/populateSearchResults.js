@@ -26,7 +26,14 @@ function populateParkResults(array){
 			    cardBody.className = 'card-body';
 
 			    let image = document.createElement('img');
-			    image.src = result[i].images[0].url;
+			    if(result[i].images == undefined){
+		    	image.src= "https://www.alterenterprise.com/wp-content/uploads/2014/02/Image-not-available_1.jpg";
+		    	}else if(result[i].images[0] == undefined){
+		    	image.src= "https://www.alterenterprise.com/wp-content/uploads/2014/02/Image-not-available_1.jpg";
+		    	}else{
+		    	 image.src = result[i].images[0].url;
+		    	}
+			
 			    image.className = 'card-img-top';
 
 			   let body = document.createElement('div');
