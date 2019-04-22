@@ -220,9 +220,17 @@ app.get('/parks',function(req,res){
       }
       */
       var image="";
-      if(result[0].images.length > 0 || result[0].images != undefined){
+      if(result[0].images ==undefined){
+        image = "https://www.alterenterprise.com/wp-content/uploads/2014/02/Image-not-available_1.jpg";
+      }else if(result[0].images[0] == undefined){
+        image = "https://www.alterenterprise.com/wp-content/uploads/2014/02/Image-not-available_1.jpg";
+      }else{
         image=result[0].images[0].url;
       }
+      /*
+      if(result[0].images.length > 0 || result[0].images != undefined){
+        image=result[0].images[0].url;
+      }*/
       //console.log(image);
       //console.log(images);
         /* Left off here, need to finish getting all info for template */
