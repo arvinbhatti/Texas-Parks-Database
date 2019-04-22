@@ -73,10 +73,13 @@
         <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
           <form action="/search" method="post">
             <div class="form-row">
-              <div class="col-12 col-md-9 mb-2 mb-md-0">
+              <div class="col-md-7">
+            <!--  <div class="col-12 col-md-9 mb-2 mb-md-0"> -->
                 <input id="zipInput" type="text" class="form-control form-control-lg" name='zipInput'placeholder="Enter your zipcode...">
               </div>
-              <div>
+             <!-- </div> -->
+             <!-- <div> -->
+              <div class="col">
                 <select id="model" name="model" class="selectpicker form-control form-control-lg" data-style="btn-primary">
                   <option selected="Choose Model">Choose Model</option>
                   <option value="parks">Parks</option>
@@ -84,8 +87,10 @@
                   <option value="visitorCenters">Visitor Centers</options>
                 </select>
               </div>
-              <div class="col-12 col-md-3">
-                <button type="submit" class="btn btn-block btn-lg btn-primary" style="margin-left: 200px; margin-top: 5px;" >Search!</button>
+             <!-- </div> -->
+             <!-- <div class="col-12 col-md-3"> -->
+              <div class="col">
+                <button type="submit" class="btn btn-block btn-lg btn-primary"  >Search!</button>
               </div>
             </div>
           </form>
@@ -132,36 +137,29 @@
     </div>
   </section>
 
-
+<!--
    <div id="table" class="carousel slide" data-ride="carousel">
 
-  <!-- Indicators -->
+ 
   <ul class="carousel-indicators">
     <li data-target="#table" data-slide-to="0" class="active"></li>
     <li data-target="#table" data-slide-to="1"></li>
     <li data-target="#table" data-slide-to="2"></li>
   </ul>
 
-  <!-- The slideshow -->
+
   <div class="carousel-inner">
     <div class="carousel-item active">
      <table id="parkTable" class="table">
 
-<!--
-<p>What type of trip would you like to plan?</p>
-<div class="pagination">
-  <a href="#" class="active" >National Parks</a>
-  <a href="trails.html">Trails</a>
-  <a href="campsites.html">Campsites</a>
-</div>
--->
+
 
       <thead class="thead-dark">
         <tr>
           <th scope="col">#</th>
           <th scope="col">Park Name</th>
           <th scope="col">Location</th>
-      <!--<th scope="col">Acres</th>-->
+      
         </tr>
       </thead>
       <tbody id="parkTableBody">
@@ -172,7 +170,7 @@
           <th scope="col"></th>
           <th scope="col"></th>
           <th scope="col"></th>
-      <!--<th scope="col"></th>-->
+      
         </tr>
      </thead>
     </table>
@@ -187,7 +185,7 @@
           <th scope="col">#</th>
           <th scope="col">Campsite Name</th>
           <th scope="col">Location</th>
-      <!--<th scope="col">Acres</th>-->
+     
         </tr>
       </thead>
       <tbody id="campsiteTableBody">
@@ -198,7 +196,7 @@
           <th scope="col"></th>
           <th scope="col"></th>
           <th scope="col"></th>
-      <!--<th scope="col"></th>-->
+     
         </tr>
      </thead>
     </table>
@@ -211,7 +209,7 @@
           <th scope="col">#</th>
           <th scope="col">Visitor Center Name</th>
           <th scope="col">Location</th>
-      <!--<th scope="col">Acres</th>-->
+     
         </tr>
       </thead>
       <tbody id="visitorTableBody">
@@ -222,14 +220,14 @@
           <th scope="col"></th>
           <th scope="col"></th>
           <th scope="col"></th>
-      <!--<th scope="col"></th>-->
+   
         </tr>
      </thead>
     </table>
     </div>
   </div>
 
-  <!-- Left and right controls -->
+
   <a class="carousel-control-prev" href="#table" data-slide="prev">
     <span class="carousel-control-prev-icon"></span>
   </a>
@@ -239,7 +237,7 @@
 
 </div>
 
-
+-->
 
 
  
@@ -254,14 +252,14 @@ $(document).ready(function(){
 });
 </script> -->
 
-<br><br><br>
+<!--<br><br><br>-->
 
 
 <div class="embed-responsive embed-responsive-16by9">
   <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/oUbVEJv-peU" frameborder="100" allowfullscreen></iframe> allowfullscreen></iframe>
 </div>
 
-<br><br><br>
+<!--<br><br><br>-->
 
   <!-- Image Showcases -->
   <section class="showcase">
@@ -356,44 +354,11 @@ $(document).ready(function(){
             <li class="list-inline-item">
               <a href="about.html">About</a>
             </li>
-            <!--
-            <li class="list-inline-item">&sdot;</li>
-            <li class="list-inline-item">
-              <a href="#">Contact</a>
-            </li>
-            <li class="list-inline-item">&sdot;</li>
-            <li class="list-inline-item">
-              <a href="#">Terms of Use</a>
-            </li>
-            <li class="list-inline-item">&sdot;</li>
-            <li class="list-inline-item">
-              <a href="#">Privacy Policy</a>
-            </li>
-          -->
+          
           </ul>
           <p class="text-muted small mb-4 mb-lg-0">&copy; Texas Parks Database. All Rights Reserved.</p>
         </div>
-        <!--
-        <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
-          <ul class="list-inline mb-0">
-            <li class="list-inline-item mr-3">
-              <a href="#">
-                <i class="fab fa-facebook fa-2x fa-fw"></i>
-              </a>
-            </li>
-            <li class="list-inline-item mr-3">
-              <a href="#">
-                <i class="fab fa-twitter-square fa-2x fa-fw"></i>
-              </a>
-            </li>
-            <li class="list-inline-item">
-              <a href="#">
-                <i class="fab fa-instagram fa-2x fa-fw"></i>
-              </a>
-            </li>
-          </ul>
-        </div>
-      -->
+        
       </div>
     </div>
 
@@ -409,7 +374,7 @@ $(document).ready(function(){
 
   <!-- <script type="server.js"></script>
  -->
-<script type="text/javascript" src="populateTable.js"></script>
+<!--<script type="text/javascript" src="populateTable.js"></script>-->
 </body>
 
 </html>
