@@ -726,6 +726,7 @@ app.get('/getImages', function(req,res){
   var parkCode = req.query.parkCode;
     //console.log(parkCode);
    MongoClient.connect(uri,{ useNewUrlParser: true },  function(err, db) {
+            if(err) throw err;
 
             var database = db.db("coral");
             var cursor = database.collection('newParks').find({parkCode: parkCode}).toArray(function(err,result){
@@ -776,6 +777,7 @@ var doParks = function(latLong, res, zip) {
   var zipLat = latLong.lat;
   var zipLong = latLong.long;
   MongoClient.connect(uri, {useNewUrlParser: true}, function(err, db){
+    if(err) throw err;
     var database = db.db('coral');
     var cursor = database.collection('newParks').find();
     cursor.forEach(function(doc){
@@ -818,6 +820,7 @@ var doParks = function(latLong, res, zip) {
                 res.render('searchResults', {data: listStr, zipCode: zip, type: "Park"});
                 db.close();
                 sema++;
+                return;
               }
           }
       });
@@ -840,6 +843,7 @@ var doCampgrounds = function(latLong, res, zip) {
   var zipLat = latLong.lat;
   var zipLong = latLong.long;
   MongoClient.connect(uri, {useNewUrlParser: true}, function(err, db){
+    if(err) throw err;
     var database = db.db('coral');
     var cursor = database.collection('newCampgrounds').find();
     cursor.forEach(function(doc){
@@ -875,9 +879,9 @@ var doCampgrounds = function(latLong, res, zip) {
               var bLong = bLatLong.long;
 
               var aDist = dist(zipLat, zipLong, aLat, aLong);
-              console.log(a.name + ": " + aDist);
+              //console.log(a.name + ": " + aDist);
               var bDist = dist(zipLat, zipLong, bLat, bLong);
-              console.log(b.name + ": " + bDist);
+              //console.log(b.name + ": " + bDist);
 
               if(aDist < bDist) return -1;
               if(aDist > bDist) return 1;
@@ -887,6 +891,7 @@ var doCampgrounds = function(latLong, res, zip) {
              // res.send(JSON.stringify(list));
               var listStr = JSON.stringify(list);
              res.render('searchResults', {data: listStr, zipCode: zip, type: "Campground"});
+             db.close();
               sema++;
               return;
             }
@@ -902,6 +907,7 @@ var doVisitorCenters = function(latLong, res, zip){
   var zipLat = latLong.lat;
   var zipLong = latLong.long;
   MongoClient.connect(uri, {useNewUrlParser: true}, function(err, db){
+    if(err) throw err;
     var database = db.db('coral');
     var cursor = database.collection('newVisitorCenters').find();
     cursor.forEach(function(doc){
@@ -954,6 +960,7 @@ var doVisitorCenters = function(latLong, res, zip){
              // res.send(JSON.stringify(list));
              var listStr = JSON.stringify(list);
              res.render('searchResults', {data: listStr, zipCode: zip, type: "VisitorCenter"});
+             db.close();
               sema++;
               return;
             }
@@ -966,7 +973,7 @@ var doVisitorCenters = function(latLong, res, zip){
 app.post('/search', function(req, res){
   var zip = req.body.zipInput;
   var model = req.body.model;
-  console.log("model: "+model);
+  //console.log("model: "+model);
   var zipKey = "4Enuwr1rKc4dzu85H65Ic92HHQe258pzqqSh38Se5dEwR8l52vqnSqB7TmzQctt4/";
   var zipEndpoint = "https://www.zipcodeapi.com/rest/";
   var zipType = "json";
@@ -997,7 +1004,7 @@ app.post('/search', function(req, res){
         else if(model == "campgrounds") doCampgrounds(obj, res, zip);
         else if(model == "visitorCenters") doVisitorCenters(obj, res, zip);
         else res.send("Please Select a model to search!");
-        
+
   });
 });
 
