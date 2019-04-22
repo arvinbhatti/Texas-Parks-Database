@@ -545,10 +545,9 @@ app.get('/allParks', function(req,res){
               if (err) throw err;
               //console.log(result);
               res.send(result);
-
+              db.close();
             });
 
-      db.close();
   });
 
          //   console.log(allParks);
@@ -563,10 +562,10 @@ app.get('/allCampgrounds', function(req,res){
               if (err) throw err;
              // console.log(result);
               res.send(result);
+              db.close();
 
             });
 
-      db.close();
   });
 
   //res.send('AllCampgrounds');
@@ -580,10 +579,10 @@ app.get('/allVisitorCenters', function(req,res){
               if (err) throw err;
              // console.log(result);
               res.send(result);
+              db.close();
 
             });
 
-      db.close();
   });
 
   //res.send('AllVisitorCenters');
