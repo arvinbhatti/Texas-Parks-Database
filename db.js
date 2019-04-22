@@ -48,6 +48,7 @@ var mapInit = function() {
         var latLong = parseLoc(obj);
         latLongMap.set(parkCode, latLong);
     });
+    db.close();
   });
 }
 
