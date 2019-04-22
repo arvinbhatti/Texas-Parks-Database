@@ -73,10 +73,13 @@
         <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
           <form action="/search" method="post">
             <div class="form-row">
-              <div class="col-12 col-md-9 mb-2 mb-md-0">
+              <div class="col-md-7">
+            <!--  <div class="col-12 col-md-9 mb-2 mb-md-0"> -->
                 <input id="zipInput" type="text" class="form-control form-control-lg" name='zipInput'placeholder="Enter your zipcode...">
               </div>
-              <div>
+             <!-- </div> -->
+             <!-- <div> -->
+              <div class="col">
                 <select id="model" name="model" class="selectpicker form-control form-control-lg" data-style="btn-primary">
                   <option selected="Choose Model">Choose Model</option>
                   <option value="parks">Parks</option>
@@ -84,8 +87,10 @@
                   <option value="visitorCenters">Visitor Centers</options>
                 </select>
               </div>
-              <div class="col-12 col-md-3">
-                <button type="submit" class="btn btn-block btn-lg btn-primary" style="margin-left: 200px; margin-top: 5px;" >Search!</button>
+             <!-- </div> -->
+             <!-- <div class="col-12 col-md-3"> -->
+              <div class="col">
+                <button type="submit" class="btn btn-block btn-lg btn-primary"  >Search!</button>
               </div>
             </div>
           </form>
