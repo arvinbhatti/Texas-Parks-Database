@@ -592,6 +592,13 @@ app.get('/allVisitorCenters', function(req,res){
 var request = require('request');
 
 
+function wait(ms){
+   var start = new Date().getTime();
+   var end = start;
+   while(end < start + ms) {
+     end = new Date().getTime();
+  }
+}
 
 
 // JASON AND SIMON
@@ -608,22 +615,41 @@ var data;
 
 request(fullUrl, function (error, response, body) {
 
-      //res.send(body);
-      data = JSON.parse(body);
+      res.send(body);
+      data = JSON.parse(body); //WORKING JSON
+      console.log("BEFORE");
 
+
+
+MongoClient.connect(uri,{ useNewUrlParser: true },  function(err, db) {
+
+              var database = db.db("coral");
+              var myobj = { name: "Park", address: "BLEH" };
+
+
+              database.collection('ArvinTest').insertOne(data, function(err, res) {
+                if (err) throw err;
+
+                console.log("1 document inserted");
+
+                 });
+
+            var cursor = database.collection('ArvinTest').find({}).toArray(function(err,result){ //print out db
+              if (err) throw err;
+             console.log(result);
+             //res.send(result);
+
+
+              });
+
+      db.close();
   });
-
-
+  });
 });
 
 
 
-
-
-
-
-
-app.get('/simon', function(req,res){
+app.get('/pushdb', function(req,res){
 
 MongoClient.connect(uri,{ useNewUrlParser: true },  function(err, db) {
 
