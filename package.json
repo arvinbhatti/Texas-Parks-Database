@@ -44,6 +44,7 @@
     "node": "^11.13.0",
     "nodejs": "0.0.0",
     "pug": "^2.0.3",
+    "require": "^2.4.20",
     "requirejs": "^2.3.6",
     "simple-line-icons": "^2.4.1",
     "xmlhttprequest": "^1.8.0"

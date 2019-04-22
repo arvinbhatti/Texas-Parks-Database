@@ -770,7 +770,7 @@ var parseLoc = function(latLong) {
   return obj;
 }
 
-var doParks = function(latLong, res) {
+var doParks = function(latLong, res, zip) {
   var list = [];
   var sema = 0;
   var zipLat = latLong.lat;
@@ -813,7 +813,9 @@ var doParks = function(latLong, res) {
                   return 0;
               });
               if (!sema) {
-                res.send(JSON.stringify(list));
+                //res.send(JSON.stringify(list));
+                 var listStr = JSON.stringify(list);
+                res.render('searchResults', {data: listStr, zipCode: zip, type: "Park"});
                 db.close();
                 sema++;
               }
@@ -832,7 +834,7 @@ var listReady = function(list, count) {
   return true;
 }
 
-var doCampgrounds = function(latLong, res) {
+var doCampgrounds = function(latLong, res, zip) {
   var sema = 0;
   var list = [];
   var zipLat = latLong.lat;
@@ -882,7 +884,9 @@ var doCampgrounds = function(latLong, res) {
               return 0;
             });
             if(!sema){
-              res.send(JSON.stringify(list));
+             // res.send(JSON.stringify(list));
+              var listStr = JSON.stringify(list);
+             res.render('searchResults', {data: listStr, zipCode: zip, type: "Campground"});
               sema++;
               return;
             }
@@ -892,7 +896,7 @@ var doCampgrounds = function(latLong, res) {
   });
 }
 
-var doVisitorCenters = function(latLong, res){
+var doVisitorCenters = function(latLong, res, zip){
   var sema = 0;
   var list = [];
   var zipLat = latLong.lat;
@@ -947,7 +951,9 @@ var doVisitorCenters = function(latLong, res){
             });
             if(!sema){
               //console.log(list);
-              res.send(JSON.stringify(list));
+             // res.send(JSON.stringify(list));
+             var listStr = JSON.stringify(list);
+             res.render('searchResults', {data: listStr, zipCode: zip, type: "VisitorCenter"});
               sema++;
               return;
             }
@@ -978,7 +984,8 @@ app.post('/search', function(req, res){
         //console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
         if (response.statusCode != 200) {
           console.log("zip api request failed");
-          return;
+          //return;
+          res.send("Please Enter a valid Zip Code!");
         }
         //res.send(body);
 
@@ -986,10 +993,11 @@ app.post('/search', function(req, res){
         var data = JSON.parse(body);
         var obj = {lat:data.lat, long:data.lng};
 
-        if(model == "parks") doParks(obj, res);
-        else if(model == "campgrounds") doCampgrounds(obj, res);
-        else if(model == "visitorCenters") doVisitorCenters(obj, res);
-        else res.send("Error... model not matching");
+        if(model == "parks") doParks(obj, res, zip);
+        else if(model == "campgrounds") doCampgrounds(obj, res, zip);
+        else if(model == "visitorCenters") doVisitorCenters(obj, res, zip);
+        else res.send("Please Select a model to search!");
+        
   });
 });
 

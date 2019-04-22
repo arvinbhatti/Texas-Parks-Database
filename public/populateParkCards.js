@@ -23,8 +23,8 @@ let url="/allParks";
 		    cardText.innerHTML = `<a href='/parks?name=${result[i].fullName}'> ${result[i].fullName}</a>`;
 		    body.appendChild(cardText);
 
-
-		    cardBody.appendChild(image);
+		    card.insertBefore(image, card.children[0]);
+		    //cardBody.appendChild(image);
 		    cardBody.appendChild(body);
 		    card.appendChild(cardBody);
 		    cardContainer.appendChild(card);

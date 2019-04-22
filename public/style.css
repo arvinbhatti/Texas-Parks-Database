@@ -77,11 +77,18 @@
 }
 
 
+#cardColumn{
+	justify-content: center;
+}
+
+
 
 .card{
-	display: inline-block;
-	width: 20rem;
-	height: 25rem;
+	display: flex;
+	min-width: 20rem;
+	max-width: 20rem;
+	/*height: 25rem;*/
+	margin: 25px;
 }
 
 .card-img-top{

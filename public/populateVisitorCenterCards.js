@@ -29,11 +29,12 @@ let url="/allVisitorCenters";
 			    }
 			    
 			    image.className = 'card-img-top';
-			    cardBody.insertBefore(image, cardBody.children[0]);
+			    card.insertBefore(image, card.children[0]);
 
-			    let park = document.createElement('h6');
-			    park.className = 'card-subtitle';
+			    let park = document.createElement('p');
+			    park.className = 'card-text';
 			    park.innerHTML= 'Park: ' + result[0].fullName;
+			    park.style.margin='5px';
 			    cardBody.insertBefore(park, cardBody.children[2]);
 
 		    }).catch(error => console.log('error:', error));

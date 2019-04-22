@@ -1,0 +1,43 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    title Search Results
+    link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
+    link(rel='stylesheet', type='text/css', href='style.css')
+  body
+    header
+      nav.navbar.navbar-dark.bg-dark.static-top
+        // Navbar content
+        a.navbar-brand(href='index.html') Texas Parks Database
+        button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNavAltMarkup', aria-controls='navbarNavAltMarkup', aria-expanded='false', aria-label='Toggle navigation')
+          span.navbar-toggler-icon
+        #navbarNavAltMarkup.collapse.navbar-collapse
+          .navbar-nav
+            a.nav-item.nav-link.active(href='index.html')
+              | Home
+              span.sr-only (current)
+            a.nav-item.nav-link(href='allParks.html') Parks
+            a.nav-item.nav-link(href='allCampgrounds.html') Campgrounds
+            a.nav-item.nav-link(href='allVisitorCenters.html') Visitor Centers
+            a.nav-item.nav-link(href='about.html') About
+    main(role='main')
+      #myCarousel.carousel.slide(data-ride='carousel')
+        .carousel-inner
+          .carousel-item.active.allModel
+            img.first-slide(src='https://res.cloudinary.com/sagacity/image/upload/c_crop,h_2754,w_4131,x_0,y_0/c_limit,dpr_3.0,f_auto,fl_lossy,q_80,w_500/shutterstock_474482377_tynx5g.jpg', alt='First slide' )
+            .container
+              .carousel-caption
+                h1 Search Results for #{zipCode}
+                //
+                  <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                  <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+      #resultContainer.container
+        #cardColumn.card-deck
+    script(src='https://code.jquery.com/jquery-3.2.1.slim.min.js', integrity='sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN', crossorigin='anonymous')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', integrity='sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q', crossorigin='anonymous')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js', integrity='sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl', crossorigin='anonymous')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js')
+    script(type='text/javascript', data-var1=`${data}`, data-var2=`${type}`,src='populateSearchResults.js')
+
