@@ -220,9 +220,17 @@ app.get('/parks',function(req,res){
       }
       */
       var image="";
-      if(result[0].images.length > 0 || result[0].images != undefined){
+      if(result[0].images ==undefined){
+        image = "https://www.alterenterprise.com/wp-content/uploads/2014/02/Image-not-available_1.jpg";
+      }else if(result[0].images[0] == undefined){
+        image = "https://www.alterenterprise.com/wp-content/uploads/2014/02/Image-not-available_1.jpg";
+      }else{
         image=result[0].images[0].url;
       }
+      /*
+      if(result[0].images.length > 0 || result[0].images != undefined){
+        image=result[0].images[0].url;
+      }*/
       //console.log(image);
       //console.log(images);
         /* Left off here, need to finish getting all info for template */
@@ -545,10 +553,9 @@ app.get('/allParks', function(req,res){
               if (err) throw err;
               //console.log(result);
               res.send(result);
-
+              db.close();
             });
 
-      db.close();
   });
 
          //   console.log(allParks);
@@ -563,10 +570,10 @@ app.get('/allCampgrounds', function(req,res){
               if (err) throw err;
              // console.log(result);
               res.send(result);
+              db.close();
 
             });
 
-      db.close();
   });
 
   //res.send('AllCampgrounds');
@@ -580,10 +587,10 @@ app.get('/allVisitorCenters', function(req,res){
               if (err) throw err;
              // console.log(result);
               res.send(result);
+              db.close();
 
             });
 
-      db.close();
   });
 
   //res.send('AllVisitorCenters');
@@ -606,42 +613,78 @@ function wait(ms){
 
 app.get('/campupdate', function(req,res){
 
-var endpoint = "https://developer.nps.gov/api/v1/parks?";
-var apiKey = "nL3ttK1D6ACPakfdXuHtFVwqZoUqBUNakkT4mqZ6";
-var fullUrl = endpoint + "parkCode=&fields=addresses" + "&api_key=" + apiKey;
+workinglUrl = "https://developer.nps.gov/api/v1/campgrounds?stateCode=TX&fields=contacts,addresses,fees,operatingHours&api_key=YHWbuaOPiRFh3aG80BSRzcJkLDybMOzGA46AFNvM";
 
-fullUrl = "https://developer.nps.gov/api/v1/campgrounds?stateCode=TX&fields=contacts,addresses,fees,operatingHours&api_key=YHWbuaOPiRFh3aG80BSRzcJkLDybMOzGA46AFNvM";
+parkURL = "https://developer.nps.gov/api/v1/parks?stateCode=AZ,NM,TX,OK,AR,LA,MS,AL&fields=addresses,contacts,entranceFees,entrancePasses,images,operatingHours&limit=150&api_key=V3B5KvoD2zfSPnc5fhmYnrQO85dbbphbDgxDH1OI";
+campURL = "https://developer.nps.gov/api/v1/campgrounds?stateCode=AZ,NM,TX,OK,AR,LA,MS,AL&fields=contacts,addresses,fees,operatingHours&limit=150&api_key=V3B5KvoD2zfSPnc5fhmYnrQO85dbbphbDgxDH1OI";
+vistorURL = "https://developer.nps.gov/api/v1/visitorcenters?stateCode=AZ,NM,TX,OK,AR,LA,MS,AL&fields=addresses,contacts,operatingHours&limit=150&api_key=V3B5KvoD2zfSPnc5fhmYnrQO85dbbphbDgxDH1OI";
+
 
 var data;
 
-request(fullUrl, function (error, response, body) {
+request(parkURL, function (error, response, body) {
 
       res.send(body);
       data = JSON.parse(body); //WORKING JSON
-      console.log("BEFORE");
-
 
 
 MongoClient.connect(uri,{ useNewUrlParser: true },  function(err, db) {
 
               var database = db.db("coral");
-              var myobj = { name: "Park", address: "BLEH" };
-
-
-              database.collection('ArvinTest').insertOne(data, function(err, res) {
+              //var myobj = { name: "Park", address: "BLEH" };
+              database.collection('newParks').remove();
+              database.collection('newParks').insert(data.data, function(err, res) {
                 if (err) throw err;
 
-                console.log("1 document inserted");
+                console.log("Parks Updated");
 
                  });
 
-            var cursor = database.collection('ArvinTest').find({}).toArray(function(err,result){ //print out db
-              if (err) throw err;
-             console.log(result);
-             //res.send(result);
+            // var cursor = database.collection('ArvinTest').find({}).toArray(function(err,result){ //print out db
+            //   if (err) throw err;
+            //  console.log(result);
+            //   });
+
+      db.close();
+  });
+  });
+
+request(campURL, function (error, response, body) {
+
+      data = JSON.parse(body); //WORKING JSON
 
 
-              });
+MongoClient.connect(uri,{ useNewUrlParser: true },  function(err, db) {
+
+              var database = db.db("coral");
+              database.collection('newCampgrounds').remove();
+              database.collection('newCampgrounds').insert(data.data, function(err, res) {
+                if (err) throw err;
+
+                console.log("Camps Updated");
+
+                 });
+
+
+      db.close();
+  });
+  });
+
+request(vistorURL, function (error, response, body) {
+
+      data = JSON.parse(body); //WORKING JSON
+
+
+MongoClient.connect(uri,{ useNewUrlParser: true },  function(err, db) {
+
+              var database = db.db("coral");
+              database.collection('newVisitorCenters').remove();
+              database.collection('newVisitorCenters').insert(data.data, function(err, res) {
+                if (err) throw err;
+
+                console.log("VC Updated");
+
+                 });
 
       db.close();
   });
@@ -811,6 +854,11 @@ var doParks = function(latLong, res, zip) {
       }
       database.collection('newParks').countDocuments(function(err, count){
           if(count == list.length) {
+              for(var i = 0; i < list.length; i++) {
+                if(list[i].latLong == "") {
+                  list.splice(i, 1);
+                }
+              }
               list.sort(function(a, b){
                   var aLatLong = a.latLong;
                   //console.log("aLatLong: " + a.latLong);
