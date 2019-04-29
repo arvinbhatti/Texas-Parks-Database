@@ -569,7 +569,7 @@ app.get('/allCampgrounds', function(req,res){
             var cursor = database.collection('newCampgrounds').find({}).toArray(function(err,result){
               if (err) throw err;
              // console.log(result);
-              res.send(result);
+              res.send(cleanCampgrounds(result));
               db.close();
 
             });
@@ -586,7 +586,7 @@ app.get('/allVisitorCenters', function(req,res){
             var cursor = database.collection('newVisitorCenters').find({}).toArray(function(err,result){
               if (err) throw err;
              // console.log(result);
-              res.send(result);
+              res.send(cleanVisitorCenters(result));
               db.close();
 
             });
@@ -806,6 +806,42 @@ app.get('/getImages', function(req,res){
   });
 })
 
+var cleanStanton = function(list) {
+  var remList = [];
+  var start;
+  for(var i = 0; i < list.length; i++) {
+    if(list[i].name.includes("Stanton")) {
+      start = i;
+      break;
+    }
+  }
+  for(var j = 5; j > 0; j--) {
+    list.splice(start+j, 1);
+  }
+  return list;
+}
+
+var listRemDup = function(list) {
+  var remList = [];
+  for(var i = 0; i < list.length-1; i++) {
+    var next = i+1;
+    if(list[i].name == list[next].name) {
+      remList.push(next);
+      i++;
+    }
+  }
+  remList.sort(function(a,b){
+    if(a < b) return 1;
+    if(a > b) return -1;
+    return 0;
+  });
+  for(var i = 0; i < remList.length; i++) {
+    //console.log(list[remList[i]]);
+    list.splice(remList[i], 1);
+  }
+  return list;
+}
+
 const Math = require('mathjs')
 var request = require('request');
 
@@ -885,6 +921,7 @@ var doParks = function(latLong, res, zip) {
                   if(distA > distB) return 1;
                   return 0;
               });
+              list = listRemDup(list);
               if (!sema) {
                 //res.send(JSON.stringify(list));
                  var listStr = JSON.stringify(list);
@@ -906,6 +943,39 @@ var listReady = function(list, count) {
     if(!list[i].parkCode) return false;
   }
   return true;
+}
+
+var cleanCampgrounds = function(list) {
+    //console.log("Cleaning Campgrounds...");
+    //console.log(JSON.stringify(list));
+    list = cleanStanton(list);
+    list = listRemDup(list);
+    //console.log("Removed Duplicates...");
+    var remIndices = [];
+    list.forEach(function(campground){
+      var name = campground.name;
+      //console.log("Campground name: " + name);
+      if(name === "No Campgrounds"
+        || name === "Camping Alternatives"
+        || name === "Campground 1"
+        || name === "No developed campgrounds in the preserve") {
+        remIndices.push(list.indexOf(campground));
+      }
+    });
+    remIndices.sort(function(a,b){
+      if(a < b) return 1;
+      if(a > b) return -1;
+      return 0;
+    });
+    //console.log(remIndices);
+    remIndices.forEach(function(index){
+      //console.log("index: " + index);
+      //console.log(list[index]);
+      //console.log("Removing " + list[index].name + " from list...");
+      list.splice(index, 1);
+    });
+    //console.log("Removed bad names... returning");
+    return list;
 }
 
 var doCampgrounds = function(latLong, res, zip) {
@@ -958,6 +1028,7 @@ var doCampgrounds = function(latLong, res, zip) {
               if(aDist > bDist) return 1;
               return 0;
             });
+            list = cleanCampgrounds(list);
             if(!sema){
              // res.send(JSON.stringify(list));
               var listStr = JSON.stringify(list);
@@ -970,6 +1041,18 @@ var doCampgrounds = function(latLong, res, zip) {
         });
     });
   });
+}
+
+var cleanVisitorCenters= function(list) {
+    list = listRemDup(list);
+    list.forEach(function(visitorCenter){
+      var name = visitorCenter.name;
+      var badName = "No Visitor Center, Roads, Signs, or Facilities of any sort";
+      if(name == badName) {
+        list.splice(list.indexOf(visitorCenter), 1);
+      }
+    });
+    return list;
 }
 
 var doVisitorCenters = function(latLong, res, zip){
@@ -1026,6 +1109,7 @@ var doVisitorCenters = function(latLong, res, zip){
               if(aDist > bDist) return 1;
               return 0;
             });
+            list = cleanVisitorCenters(list);
             if(!sema){
               //console.log(list);
              // res.send(JSON.stringify(list));
