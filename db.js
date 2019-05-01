@@ -151,6 +151,8 @@ app.get('/test',(req,res)=>{
                 res.sendFile(__dirname + '/index.html');
             });
 
+
+
 app.get('/parks',function(req,res){
   /* Need to complete park template*/
   var name = req.query.name;
@@ -1124,6 +1126,17 @@ var doVisitorCenters = function(latLong, res, zip){
     });
   });
 }
+
+
+app.get('/button', function(req, res) {
+                res.sendFile(__dirname + '/button.html');
+            });
+
+
+
+app.get('/button', function(req, res) {
+                res.send("TEST");
+            });
 
 app.post('/search', function(req, res){
   var zip = req.body.zipInput;
