@@ -6,12 +6,12 @@
 <button type="button" onclick="run()" id="id">Click Me!</button>
  <script type="text/javascript">
 
-    //document.getElementById('id').addEventListener('click', myListener);
+ 	//document.getElementById('id').addEventListener('click', myListener);
 
- //     function myListener(e) {
- //         e.preventDefault();
- //         alert('Hello world!');
-    // }
+ // 	function myListener(e) {
+ // 		e.preventDefault();
+ //  		alert('Hello world!');
+	// }
 
 
 
@@ -39,35 +39,31 @@ Click.prototype = {
     fire: function(o, thisObj) {
         var scope = thisObj || window;
 
-    
+        window.location = "localhost:8080/otherbutton";
+
         this.handlers.forEach(function(item) {
             item.call(scope, o);
         });
-
-            console.log("test");
-
-                window.location.replace("otherbutton");
-
     }
 }
 
 
  
-// var log = (function() {
-//     var log = "";
+var log = (function() {
+    var log = "";
  
-//     return {
-//         add: function(msg) { log += msg + "\n"; },
-//         show: function() { alert(log); log = ""; }
-//     }
-// })();
+    return {
+        add: function(msg) { log += msg + "\n"; },
+        show: function() { alert(log); log = ""; }
+    }
+})();
  
 
  
 function run() {
  
     var clickHandler = function(item) { 
-        //log.add("fired: " + item); 
+        log.add("fired: " + item); 
     };
  
     var click = new Click();
@@ -79,7 +75,7 @@ function run() {
     click.subscribe(clickHandler);
     click.fire('event #3');
 
-    //log.show();
+    log.show();
 }
 
 
