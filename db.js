@@ -1224,7 +1224,7 @@ app.post('/search', function(req, res){
   var zip = req.body.zipInput;
   var model = req.body.model;
   //console.log("model: "+model);
-  var zipKey = "4Enuwr1rKc4dzu85H65Ic92HHQe258pzqqSh38Se5dEwR8l52vqnSqB7TmzQctt4/";
+  var zipKey = "HGY7BUWFOuFNRdI48Kqcg9VK12FGy24YFE8hmfNuQ11uQI0rH0kCQAFIrw25VGIO/";
   var zipEndpoint = "https://www.zipcodeapi.com/rest/";
   var zipType = "json";
   var zipUnits = "degrees";
