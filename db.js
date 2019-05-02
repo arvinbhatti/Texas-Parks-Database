@@ -849,14 +849,14 @@ var request = require('request');
 
 //var constructSinglePark = function();
 
-var dist = function(lat1, lon1, lat2, lon2) {
+var dist = function(loc) {
   var conv = 6371; // km
   var res;
 
-  var dLat = (lat2-lat1) * Math.PI / 180;
-  var dLon = (lon2-lon1) * Math.PI / 180;
-  var lat1 = (lat1) * Math.PI / 180;
-  var lat2 = (lat2) * Math.PI / 180;
+  var dLat = (loc.lat2-loc.lat1) * Math.PI / 180;
+  var dLon = (loc.lon2-loc.lon1) * Math.PI / 180;
+  var lat1 = (loc.lat1) * Math.PI / 180;
+  var lat2 = (loc.lat2) * Math.PI / 180;
 
   var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
   Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
@@ -875,7 +875,11 @@ var parseLoc = function(latLong) {
   return obj;
 }
 
-var doParks = function(latLong, res, zip) {
+var doParks = function(package) {
+  var latLong = package.latLong;
+  var res = package.res;
+  var zip = package.zip;
+
   var list = [];
   var sema = 0;
   var zipLat = latLong.lat;
@@ -906,18 +910,26 @@ var doParks = function(latLong, res, zip) {
                   if(aLatLong == "") return 1;
                   if(bLatLong == "") return -1;
 
-                  var aObj = parseLoc(aLatLong);
-                  var bObj = parseLoc(bLatLong);
+                  var aLatLong = parseLoc(aLatLong);
+                  var bLatLong = parseLoc(bLatLong);
 
-                  var aLat=aObj.lat;
-                  var aLon=aObj.long;
+                  var aLoc = {
+                    lat1: zipLat,
+                    lon1: zipLong,
+                    lat2: aLatLong.lat,
+                    lon2: aLatLong.long
+                  }
 
-                  var bLat = bObj.lat;
-                  var bLon = bObj.long;
+                  var bLoc = {
+                    lat1: zipLat,
+                    lon1: zipLong,
+                    lat2: bLatLong.lat,
+                    lon2: bLatLong.long
+                  }
 
-                  var distA = dist(zipLat, zipLong, aLat, aLon);
+                  var distA = dist(aLoc);
                   //console.log(a.name + ": " + distA);
-                  var distB = dist(zipLat, zipLong, bLat, bLon);
+                  var distB = dist(bLoc);
                   //console.log(b.name + ": " + distB);
                   if(distA < distB) return -1;
                   if(distA > distB) return 1;
@@ -980,7 +992,11 @@ var cleanCampgrounds = function(list) {
     return list;
 }
 
-var doCampgrounds = function(latLong, res, zip) {
+var doCampgrounds = function(package) {
+  var latLong = package.latLong;
+  var res = package.res;
+  var zip = package.zip;
+
   var sema = 0;
   var list = [];
   var zipLat = latLong.lat;
@@ -1021,9 +1037,23 @@ var doCampgrounds = function(latLong, res, zip) {
               //console.log("bLat: " + bLat);
               var bLong = bLatLong.long;
 
-              var aDist = dist(zipLat, zipLong, aLat, aLong);
+              var aLoc = {
+                lat1:zipLat,
+                lon1:zipLong,
+                lat2:aLatLong.lat,
+                lon2:aLatLong.long
+              }
+
+              var bLoc = {
+                lat1:zipLat,
+                lon1:zipLong,
+                lat2:bLatLong.lat,
+                lon2:bLatLong.long
+              }
+
+              var aDist = dist(aLoc);
               //console.log(a.name + ": " + aDist);
-              var bDist = dist(zipLat, zipLong, bLat, bLong);
+              var bDist = dist(bLoc);
               //console.log(b.name + ": " + bDist);
 
               if(aDist < bDist) return -1;
@@ -1057,7 +1087,11 @@ var cleanVisitorCenters= function(list) {
     return list;
 }
 
-var doVisitorCenters = function(latLong, res, zip){
+var doVisitorCenters = function(package){
+  var latLong = package.latLong;
+  var res = package.res;
+  var zip = package.zip;
+
   var sema = 0;
   var list = [];
   var zipLat = latLong.lat;
@@ -1102,9 +1136,23 @@ var doVisitorCenters = function(latLong, res, zip){
               //console.log("bLat: " + bLat);
               var bLong = bLatLong.long;
 
-              var aDist = dist(zipLat, zipLong, aLat, aLong);
+              var aLoc = {
+                lat1: zipLat,
+                lon1: zipLong,
+                lat2: aLatLong.lat,
+                lon2: aLatLong.long
+              }
+
+              var bLoc = {
+                lat1: zipLat,
+                lon1: zipLong,
+                lat2: bLatLong.lat,
+                lon2: bLatLong.long
+              }
+
+              var aDist = dist(aLoc);
               //console.log(a.name + ": " + aDist);
-              var bDist = dist(zipLat, zipLong, bLat, bLong);
+              var bDist = dist(bLoc);
               //console.log(b.name + ": " + bDist);
 
               if(aDist < bDist) return -1;
@@ -1250,9 +1298,15 @@ app.post('/search', function(req, res){
         var data = JSON.parse(body);
         var obj = {lat:data.lat, long:data.lng};
 
-        if(model == "parks") doParks(obj, res, zip);
-        else if(model == "campgrounds") doCampgrounds(obj, res, zip);
-        else if(model == "visitorCenters") doVisitorCenters(obj, res, zip);
+        var package = {
+          latLong:obj,
+          res:res,
+          zip:zip
+        }
+
+        if(model == "parks") doParks(package);
+        else if(model == "campgrounds") doCampgrounds(package);
+        else if(model == "visitorCenters") doVisitorCenters(package);
         else res.send("Please Select a model to search!");
 
   });
