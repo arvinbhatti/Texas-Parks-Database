@@ -61,7 +61,7 @@
     "gulp-sass": "4.0.2",
     "gulp-uglify": "3.0.1",
     "merge-stream": "^1.0.1",
-    "nodemon": "^1.18.11"
+    "nodemon": "^1.19.0"
   },
   "main": "about.js"
 }
