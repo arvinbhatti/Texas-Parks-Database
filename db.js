@@ -617,9 +617,9 @@ app.get('/campupdate', function(req,res){
 
 workinglUrl = "https://developer.nps.gov/api/v1/campgrounds?stateCode=TX&fields=contacts,addresses,fees,operatingHours&api_key=YHWbuaOPiRFh3aG80BSRzcJkLDybMOzGA46AFNvM";
 
-parkURL = "https://developer.nps.gov/api/v1/parks?stateCode=AZ,NM,TX,OK,AR,LA,MS,AL&fields=addresses,contacts,entranceFees,entrancePasses,images,operatingHours&limit=150&api_key=97G78UbOEedCkEfAmh9Efyhq32g2g9ZmPxhriCBr";
-campURL = "https://developer.nps.gov/api/v1/campgrounds?stateCode=AZ,NM,TX,OK,AR,LA,MS,AL&fields=contacts,addresses,fees,operatingHours&limit=150&api_key=97G78UbOEedCkEfAmh9Efyhq32g2g9ZmPxhriCBr";
-vistorURL = "https://developer.nps.gov/api/v1/visitorcenters?stateCode=AZ,NM,TX,OK,AR,LA,MS,AL&fields=addresses,contacts,operatingHours&limit=150&api_key=97G78UbOEedCkEfAmh9Efyhq32g2g9ZmPxhriCBr";
+parkURL = "https://developer.nps.gov/api/v1/parks?stateCode=AZ,NM,TX,OK,AR,LA,MS,AL&fields=addresses,contacts,entranceFees,entrancePasses,images,operatingHours&limit=150&api_key=DBgfvTCTyzeiSfBUVAVsgm46tT5jI2InC4N9h1om";
+campURL = "https://developer.nps.gov/api/v1/campgrounds?stateCode=AZ,NM,TX,OK,AR,LA,MS,AL&fields=contacts,addresses,fees,operatingHours&limit=150&api_key=DBgfvTCTyzeiSfBUVAVsgm46tT5jI2InC4N9h1om";
+vistorURL = "https://developer.nps.gov/api/v1/visitorcenters?stateCode=AZ,NM,TX,OK,AR,LA,MS,AL&fields=addresses,contacts,operatingHours&limit=150&api_key=DBgfvTCTyzeiSfBUVAVsgm46tT5jI2InC4N9h1om";
 
 
 var data;
