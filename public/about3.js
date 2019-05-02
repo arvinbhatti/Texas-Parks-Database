@@ -126,6 +126,7 @@ function userInfo(team, member, userName) {
 			getCommits(team, member, userName);
 			getCommits2(team, member, userName);
 			getCommits3(team, member, userName);
+			getCommits4(team, member, userName);
 		}
 	};
 	xmlhttp.open("GET", "https://api.github.com/users/" + userName);
@@ -185,6 +186,25 @@ function getCommits3(team, member, userName) {
 		}
 	};
 	xmlhttp.open("GET", "https://api.github.com/repos/simonkliewer/ee461l_coral/commits?page=3");
+	xmlhttp.send();
+}
+
+function getCommits4(team, member, userName) {
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			var data = (JSON.parse(xmlhttp.responseText));
+			var name = team.usrToName(userName);
+			//console.log(data);
+			for(var i = 0; i < data.length; i++) {
+				var author = data[i].commit.author.name;
+				if (author != null && (author == userName || author == name))
+					member.commits++;
+			}
+			//getIssues(team, member, userName);
+		}
+	};
+	xmlhttp.open("GET", "https://api.github.com/repos/simonkliewer/ee461l_coral/commits?page=4");
 	xmlhttp.send();
 }
 
